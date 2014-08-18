@@ -1,10 +1,12 @@
 # ganeti-cookbook
 
-TODO: Enter the cookbook description here.
+This cookbook is designed to install Ganeti.
 
 ## Supported Platforms
 
-TODO: List your supported platforms.
+* CentOS 6
+* Ubuntu 12.04
+* Debian 7
 
 ## Attributes
 
@@ -16,10 +18,16 @@ TODO: List your supported platforms.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['ganeti']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['ganeti']['version']</tt></td>
+    <td>String</td>
+    <td>Ganeti version to install</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['ganeti']['hypervisor']</tt></td>
+    <td>String</td>
+    <td>Hypervisor to install and use. KVM is currently only supported</td>
+    <td><tt>kvm</tt></td>
   </tr>
 </table>
 
@@ -36,6 +44,12 @@ Include `ganeti` in your node's `run_list`:
   ]
 }
 ```
+
+## TODO
+
+* Cluster initialization
+* RAPI users
+* Configure ``lvm.conf`` with filters for the drbd devices
 
 ## Contributing
 
