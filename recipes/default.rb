@@ -29,9 +29,7 @@ include_recipe "ganeti::_yum"
 packages = node['ganeti']['packages']["#{node['ganeti']['hypervisor']}"] +
   node['ganeti']['packages']['common']
 
-packages.each do |p|
-  package p
-end
+packages.each { |p| package p }
 
 # load/configure drbd/kvm modules
 include_recipe "modules"
