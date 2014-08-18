@@ -6,3 +6,8 @@ description      'Installs/Configures ganeti'
 long_description 'Installs/Configures ganeti'
 version          '0.1.0'
 
+depends          'apt'
+depends          'yum-epel'
+depends          'yum-elrepo'
+depends          'lvm'
+depends          'modules'
