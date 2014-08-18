@@ -20,11 +20,18 @@ case node['platform_family']
 when "rhel"
   include_recipe "yum-epel"
   include_recipe "yum-elrepo"
+  yum_repository "ganeti" do
+    repositoryid "ganeti"
+    description node['ganeti']['yum']['description']
+    url node['ganeti']['yum']['uri']
+    gpgcheck node['ganeti']['yum']['gpgcheck']
+    gpgkey node['ganeti']['yum']['gpgkey']
+    action :add
+  end
 end
 
 # Ganeti dependencies
 include_recipe "lvm"
-include_recipe "ganeti::_yum"
 
 packages = node['ganeti']['packages']["#{node['ganeti']['hypervisor']}"] +
   node['ganeti']['packages']['common']
