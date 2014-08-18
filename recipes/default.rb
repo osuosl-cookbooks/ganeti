@@ -54,6 +54,6 @@ cookbook_file "/etc/cron.d/ganeti" do
   source "ganeti-cron"
   owner "root"
   group "root"
-  mode "0755"
+  mode "0644"
 end
 
