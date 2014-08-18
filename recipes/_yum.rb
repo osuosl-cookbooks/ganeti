@@ -23,6 +23,7 @@ when "rhel"
     description node['ganeti']['yum']['description']
     url node['ganeti']['yum']['uri']
     gpgcheck node['ganeti']['yum']['gpgcheck']
+    gpgkey node['ganeti']['yum']['gpgkey']
     action :add
   end
 end
