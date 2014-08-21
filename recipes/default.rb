@@ -62,3 +62,9 @@ cookbook_file "/etc/cron.d/ganeti" do
   mode "0644"
 end
 
+rapi = Chef::EncryptedDataBagItem.load(
+  "ganeti", node['ganeti']['data_bag']['rapi_users'])
+
+file "/var/lib/ganeti/rapi/users" do
+  content rapi_users(rapi)
+end

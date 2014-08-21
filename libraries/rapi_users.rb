@@ -13,4 +13,3 @@ def rapi_users(h)
   end
   return rapi_users.join("\n")
 end
-    

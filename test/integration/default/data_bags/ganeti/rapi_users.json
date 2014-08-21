@@ -1,0 +1,15 @@
+{
+  "id": "rapi_users",
+  "testuser1": {
+    "encrypted_data": "Bllz3dzbEkR/eDrjE1JzV2tokwjJVgLPGUkOrT+YvyoUCd0XgL0FxQbrjJSm\nceK7h29bspun3WhYZ3rcr+xMvA==\n",
+    "iv": "N139A8ZB5gxXUwrAzuE8Rw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  },
+  "testuser2": {
+    "encrypted_data": "FIbPFYYR7xI5qTwizq64jFYlDDoVtsR+1hRwcvgzzXN9c7G6oxU3bQM/RIVS\n600w821coXiNUHeD7rl2bbmwpQ==\n",
+    "iv": "yMXkv8hRcxKuDWpjyKBUFw==\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}
