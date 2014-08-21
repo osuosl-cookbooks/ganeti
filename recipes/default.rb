@@ -66,5 +66,5 @@ rapi = Chef::EncryptedDataBagItem.load(
   "ganeti", node['ganeti']['data_bag']['rapi_users'])
 
 file "/var/lib/ganeti/rapi/users" do
-  content rapi_users(rapi)
+  content rapi_users(rapi.to_hash)
 end
