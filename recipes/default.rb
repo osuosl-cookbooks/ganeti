@@ -65,6 +65,17 @@ end
 rapi = Chef::EncryptedDataBagItem.load(
   "ganeti", node['ganeti']['data_bag']['rapi_users'])
 
+directory "/var/lib/ganeti/rapi" do
+  owner "root"
+  group "root"
+  mode 0750
+  recursive true
+  action :create
+end
+
 file "/var/lib/ganeti/rapi/users" do
+  owner "root"
+  group "root"
+  mode 0640
   content rapi_users(rapi.to_hash)
 end
