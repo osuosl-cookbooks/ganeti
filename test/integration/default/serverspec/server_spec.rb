@@ -52,6 +52,13 @@ when 'redhat', 'centos'
   end
 end
 
+# Make sure lvm.conf excludes drbd
+describe file('/etc/lvm/lvm.conf') do
+  its(:content) {
+    should match /filter = \[ \"a\/\.\*\/\", \"r\|\/dev\/drbd\.\*\|\" \]/
+  }
+end
+
 # Test rapi users
 describe file('/var/lib/ganeti/rapi/users') do
   it { should be_mode 640 }

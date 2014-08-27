@@ -99,6 +99,13 @@ cookbook_file "/etc/cron.d/ganeti" do
   mode "0644"
 end
 
+cookbook_file "/etc/lvm/lvm.conf" do
+  source "lvm.conf"
+  owner "root"
+  group "root"
+  mode "0644"
+end
+
 rapi = Chef::EncryptedDataBagItem.load(
   "ganeti", node['ganeti']['data_bag']['rapi_users'])
 
