@@ -52,7 +52,6 @@ Include `ganeti` in your node's `run_list`:
 
 ## TODO
 
-* Configure ``lvm.conf`` with filters for the drbd devices
 * Add Debian 7 support
 
 ## Contributing
