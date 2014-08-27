@@ -10,26 +10,32 @@ This cookbook is designed to install Ganeti.
 
 ## Attributes
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['ganeti']['version']</tt></td>
-    <td>String</td>
-    <td>Ganeti version to install</td>
-    <td><tt>nil</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['ganeti']['hypervisor']</tt></td>
-    <td>String</td>
-    <td>Hypervisor to install and use. KVM is currently only supported</td>
-    <td><tt>kvm</tt></td>
-  </tr>
-</table>
+- `['ganeti']['version']` - Ganeti version to install. Defaults to `nil`
+- `['ganeti']['hypervisor']` - Hypervisor to install and use. Defaults to `kvm`
+- `['ganeti']['master-node']` - FQDN of the host that will be set as the initial
+  master and will initialize the cluster. A value of `true` is also valid but
+  only used for testing purposes or single master clusters. Defaults to `nil`.
+- `['ganeti']['bin-path']` - Path for the Ganeti binaries. Defaults to
+  `/usr/sbin/`.
+- `['ganeti']['data_bag']` - Data bag name for RAPI users. Defaults to
+  `rapi_users`.
+
+### Cluster Initialization attributes
+- `['ganeti']['cluster']['name']` - FQDN of the cluster. Must be resolvable.
+  Defaults to `nil`.
+- `['ganeti']['cluster']['disk-templates']` - Array of disk templates to be
+  enabled. Defaults to `[ 'plain', 'drbd' ]`.
+- `['ganeti']['cluster']['master-netdev']` - Master network device for the
+  Ganeti cluster. Must exist before installing ganeti. Defaults to `br0`.
+- `['ganeti']['cluster']['enabled-hypervisors']` - An array of hypervisors to
+  enable in the cluster. Defaults to `[ 'kvm' ]`
+- `['ganeti']['cluster']['nic']['mode']`- Default NIC mode for the guests on the
+  cluster.  Defaults to `bridged`.
+- `['ganeti']['cluster']['nic']['link']` - Default NIC link for the guests on
+  the cluster. Defaults to `br0`.
+- `['ganeti']['cluster']['extra-opts']` - Arbitrary list of commands to send to
+  the `gnt-cluster init` prompt outside of options already sent from the other
+  attributes. Defaults to `nil`.
 
 ## Usage
 
@@ -47,8 +53,6 @@ Include `ganeti` in your node's `run_list`:
 
 ## TODO
 
-* Cluster initialization
-* RAPI users
 * Configure ``lvm.conf`` with filters for the drbd devices
 
 ## Contributing
