@@ -21,6 +21,7 @@ suites:
     run_list:
     - recipe[ganeti::_test]
     - recipe[ganeti]
+    excludes: [ "debian-7" ]
     attributes:
       ganeti:
         master-node: true

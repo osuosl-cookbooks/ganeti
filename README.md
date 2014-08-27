@@ -6,7 +6,6 @@ This cookbook is designed to install Ganeti.
 
 * CentOS 6
 * Ubuntu 12.04
-* Debian 7
 
 ## Attributes
 
@@ -54,6 +53,7 @@ Include `ganeti` in your node's `run_list`:
 ## TODO
 
 * Configure ``lvm.conf`` with filters for the drbd devices
+* Add Debian 7 support
 
 ## Contributing
 
