@@ -16,8 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-case node['platform_family']
-when "rhel"
+case node['platform']
+when "rhel", "centos"
   include_recipe "yum-epel"
   include_recipe "yum-elrepo"
   yum_repository "ganeti" do
@@ -27,6 +27,15 @@ when "rhel"
     gpgcheck node['ganeti']['yum']['gpgcheck']
     gpgkey node['ganeti']['yum']['gpgkey']
     action :add
+  end
+when "ubuntu"
+  include_recipe "apt"
+  apt_repository 'ganeti' do
+    uri   'http://ppa.launchpad.net/pkg-ganeti-devel/lts/ubuntu '
+    distribution node['lsb']['codename']
+    components   ['main']
+    keyserver    'keyserver.ubuntu.com'
+    key          '38520275'
   end
 end
 
