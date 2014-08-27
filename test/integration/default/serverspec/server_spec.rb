@@ -58,3 +58,22 @@ describe file('/var/lib/ganeti/rapi/users') do
   it { should contain('testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write') }
   it { should contain('testuser2 {HA1}35806ebfe30a5c127194161a88d2b796') }
 end
+
+# Test ganeti processes
+%w[noded masterd rapi luxid confd].each do |d|
+  describe process("ganeti-#{d}") do
+    it { should be_running }
+  end
+end
+
+# Test ganeti ports
+%w[1811 5080].each do |p|
+  describe port(p) do
+    it { should be_listening }
+  end
+end
+
+# Verify ganeti
+describe command("/usr/sbin/gnt-cluster verify") do
+  it { should return_exit_status 0 }
+end

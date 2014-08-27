@@ -30,7 +30,6 @@ when "rhel"
   end
 end
 
-# Ganeti dependencies
 include_recipe "lvm"
 
 packages = node['ganeti']['packages']["#{node['ganeti']['hypervisor']}"] +
@@ -43,6 +42,35 @@ include_recipe "modules"
 
 package node['ganeti']['package_name'] do
   version node['ganeti']['version'] if node['ganeti']['version']
+end
+
+# Ensure these directories exist
+%w[ /root/.ssh /var/lib/ganeti/rapi ].each do |d|
+  directory d do
+    owner "root"
+    group "root"
+    mode 0750
+    recursive true
+    action :create
+  end
+end
+
+# Initialize cluster if set as a master-node
+if node['fqdn'] == node['ganeti']['master-node'] || node['ganeti']['master-node'] == true
+  execute "ganeti-initialize" do
+    cluster = node['ganeti']['cluster']
+    disk_templates = cluster['disk-templates'].join(",")
+    hypervisors = cluster['enabled-hypervisors'].join(",")
+    nic_mode = cluster['nic']['mode']
+    nic_link = cluster['nic']['link']
+    command [ "#{node['ganeti']['bin-path']}/gnt-cluster init",
+      "--enabled-disk-templates=#{disk_templates}",
+      "--master-netdev=#{cluster['master-netdev']}",
+      "--enabled-hypervisors=#{hypervisors}",
+      "-N mode=#{nic_mode},link=#{nic_link}",
+      cluster['extra-opts'], cluster['name']].join(" ")
+    creates "/var/lib/ganeti/config.data"
+  end
 end
 
 service "ganeti" do
@@ -64,14 +92,6 @@ end
 
 rapi = Chef::EncryptedDataBagItem.load(
   "ganeti", node['ganeti']['data_bag']['rapi_users'])
-
-directory "/var/lib/ganeti/rapi" do
-  owner "root"
-  group "root"
-  mode 0750
-  recursive true
-  action :create
-end
 
 file "/var/lib/ganeti/rapi/users" do
   owner "root"

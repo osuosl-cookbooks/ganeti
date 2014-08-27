@@ -19,5 +19,18 @@ platforms:
 suites:
   - name: default
     run_list:
+    - recipe[ganeti::_test]
     - recipe[ganeti]
     attributes:
+      ganeti:
+        master-node: true
+        cluster:
+          disk-templates:
+            - "diskless"
+          master-netdev: "lo"
+          enabled-hypervisors:
+            - "fake"
+          nic:
+            mode: "routed"
+            link: "100"
+          name: "ganeti.local"
