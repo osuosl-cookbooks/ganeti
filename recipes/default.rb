@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 case node['platform']
+# FC024: Need to use platform here since we don't have a PPA for Debian
 when "rhel", "centos"
   include_recipe "yum-epel"
   include_recipe "yum-elrepo"
@@ -41,7 +42,7 @@ end
 
 include_recipe "lvm"
 
-packages = node['ganeti']['packages']["#{node['ganeti']['hypervisor']}"] +
+packages = node['ganeti']['packages'][node['ganeti']['hypervisor']] +
   node['ganeti']['packages']['common']
 
 packages.each { |p| package p }
@@ -65,21 +66,23 @@ end
 end
 
 # Initialize cluster if set as a master-node
-if node['fqdn'] == node['ganeti']['master-node'] || node['ganeti']['master-node'] == true
-  execute "ganeti-initialize" do
-    cluster = node['ganeti']['cluster']
-    disk_templates = cluster['disk-templates'].join(",")
-    hypervisors = cluster['enabled-hypervisors'].join(",")
-    nic_mode = cluster['nic']['mode']
-    nic_link = cluster['nic']['link']
-    command [ "#{node['ganeti']['bin-path']}/gnt-cluster init",
-      "--enabled-disk-templates=#{disk_templates}",
-      "--master-netdev=#{cluster['master-netdev']}",
-      "--enabled-hypervisors=#{hypervisors}",
-      "-N mode=#{nic_mode},link=#{nic_link}",
-      cluster['extra-opts'], cluster['name']].join(" ")
-    creates "/var/lib/ganeti/config.data"
-  end
+execute "ganeti-initialize" do
+  cluster = node['ganeti']['cluster']
+  disk_templates = cluster['disk-templates'].join(",")
+  hypervisors = cluster['enabled-hypervisors'].join(",")
+  nic_mode = cluster['nic']['mode']
+  nic_link = cluster['nic']['link']
+  command [ "#{node['ganeti']['bin-path']}/gnt-cluster init",
+    "--enabled-disk-templates=#{disk_templates}",
+    "--master-netdev=#{cluster['master-netdev']}",
+    "--enabled-hypervisors=#{hypervisors}",
+    "-N mode=#{nic_mode},link=#{nic_link}",
+    cluster['extra-opts'], cluster['name']].join(" ")
+  creates "/var/lib/ganeti/config.data"
+  only_if {
+    node['fqdn'] == node['ganeti']['master-node'] ||
+    node['ganeti']['master-node'] == true
+  }
 end
 
 service "ganeti" do
