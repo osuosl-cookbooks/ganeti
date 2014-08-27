@@ -4,8 +4,8 @@ driver:
 
 provisioner:
   name: chef_solo
-  data_bags_path: test/integration/default/data_bags
-  encrypted_data_bag_secret_key_path: test/integration/default/encrypted_data_bag_secret
+  data_bags_path: test/integration/data_bags
+  encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret
 
 platforms:
   - name: centos-6.5
@@ -18,6 +18,10 @@ platforms:
 
 suites:
   - name: default
+    run_list:
+    - recipe[ganeti]
+    excludes: [ "debian-7" ]
+  - name: master
     run_list:
     - recipe[ganeti::_test]
     - recipe[ganeti]
