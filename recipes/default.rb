@@ -109,12 +109,17 @@ cookbook_file "/etc/lvm/lvm.conf" do
   mode "0644"
 end
 
-rapi = Chef::EncryptedDataBagItem.load(
-  "ganeti", node['ganeti']['data_bag']['rapi_users'])
+begin
+  rapi = Chef::EncryptedDataBagItem.load(
+    "ganeti", node['ganeti']['data_bag']['rapi_users'])
 
-file "/var/lib/ganeti/rapi/users" do
-  owner "root"
-  group "root"
-  mode 0640
-  content rapi_users(rapi.to_hash)
+  file "/var/lib/ganeti/rapi/users" do
+    owner "root"
+    group "root"
+    mode 0640
+    content rapi_users(rapi.to_hash)
+  end
+rescue
+  Chef::Log.info("No rapi_users data bag, skipping")
 end
+

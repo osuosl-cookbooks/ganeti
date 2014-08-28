@@ -61,7 +61,5 @@ end
 
 # Test rapi users
 describe file('/var/lib/ganeti/rapi/users') do
-  it { should be_mode 640 }
-  it { should contain('testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write') }
-  it { should contain('testuser2 {HA1}35806ebfe30a5c127194161a88d2b796') }
+  it { should_not be_file }
 end
