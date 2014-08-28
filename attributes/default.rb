@@ -5,7 +5,8 @@ default['ganeti']['bin-path'] = "/usr/sbin"
 default['ganeti']['data_bag']['rapi_users'] = "rapi_users"
 default['modules']['modules']= [
   'drbd minor_count=128 usermode_helper=/bin/true',
-  'kvm' ]
+  'kvm'
+  ]
 # Cluster initialization attributes
 default['ganeti']['cluster']['name'] = nil
 default['ganeti']['cluster']['disk-templates'] = [ 'plain', 'drbd' ]
