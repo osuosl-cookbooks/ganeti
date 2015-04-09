@@ -38,7 +38,7 @@ end
 describe file('/etc/cron.d/ganeti') do
   it { should be_mode 644 }
   its(:content) do
-    should match(%r{45 1 \* \* \* root [ -x /usr/sbin/ganeti-cleaner ] && \
+    should match(%r{45 1 \* \* \* root \[ -x /usr/sbin/ganeti-cleaner \] && \
 /usr/sbin/ganeti-cleaner master})
   end
 end
@@ -66,7 +66,7 @@ end
 # Make sure lvm.conf excludes drbd
 describe file('/etc/lvm/lvm.conf') do
   its(:content) do
-    should match(%r{filter = \[ "a.\*", "r\|/dev/drbd.\*\|" \]})
+    should match(%r{filter = \[ "a/.\*/", "r\|/dev/drbd.\*\|" \]})
   end
 end
 
