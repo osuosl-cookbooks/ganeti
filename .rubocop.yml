@@ -3,4 +3,4 @@ AllCops:
     - '**/Berksfile'
     - '**/Cheffile'
   Exclude:
-    - 'metadata.rb'
+    - '**/metadata.rb'

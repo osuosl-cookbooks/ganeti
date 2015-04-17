@@ -21,7 +21,7 @@ suites:
     excludes: [ "debian-7" ]
   - name: master
     run_list:
-    - recipe[ganeti::_test]
+    - recipe[ganeti-test]
     - recipe[ganeti]
     excludes: [ "debian-7" ]
     provisioner:
