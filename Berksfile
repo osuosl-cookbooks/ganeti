@@ -1,4 +1,4 @@
-source 'https://api.berkshelf.com'
+source 'https://supermarket.chef.io'
 
 cookbook 'apt'
 cookbook 'ganeti-test', path: 'test/cookbooks/ganeti-test'
