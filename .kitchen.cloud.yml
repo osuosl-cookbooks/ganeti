@@ -6,19 +6,20 @@ driver_config:
   key_name: <%= ENV['OS_SSH_KEYPAIR'] %>
   private_key_path: <%= ENV['OS_PRIVATE_SSH_KEY'] %>
   public_key_path: <%= ENV['OS_PUBLIC_SSH_KEY'] %>
-  openstack_tenant: <%= ENV['OS_TENANT'] %>
+  openstack_tenant: <%= ENV['OS_TENANT_NAME'] %>
   floating_ip: <%= ENV['OS_FLOATING_IP'] %>
+  floating_ip_pool: <%= ENV['OS_FLOATING_IP_POOL'] %>
   flavor_ref: <%= ENV['OS_FLAVOR_REF'] %>
 
 provisioner:
   name: chef_solo
 
 platforms:
-  - name: centos-6.5
+  - name: centos-6.6
     driver_plugin: openstack
     driver_config:
       username: centos
-      image_ref: "CentOS 6.5"
+      image_ref: "CentOS 6.6"
   - name: ubuntu-12.04
     driver_plugin: openstack
     driver_config:
@@ -41,7 +42,7 @@ suites:
     excludes: [ "debian-7" ]
   - name: master
     run_list:
-      - recipe[ganeti::_test]
+      - recipe[ganeti-test]
       - recipe[ganeti]
     excludes: [ "debian-7" ]
     provisioner:

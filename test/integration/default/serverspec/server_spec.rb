@@ -1,14 +1,24 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
 case os[:family].downcase
 when 'redhat', 'centos'
-  packages = [ 'ganeti', 'lvm2', 'qemu-kvm', 'qemu-kvm-tools', 'drbd83-utils',
-               'kmod-drbd83' ]
+  packages = %w(
+    drbd83-utils
+    ganeti
+    kmod-drbd83
+    lvm2
+    qemu-kvm
+    qemu-kvm-tools
+  )
 when 'debian', 'ubuntu'
-  packages = [ 'ganeti2', 'lvm2', 'qemu-kvm', 'drbd8-utils' ]
+  packages = %w(
+    drbd8-utils
+    ganeti2
+    lvm2
+    qemu-kvm
+  )
 end
 
 packages.each do |p|
@@ -27,16 +37,17 @@ end
 
 describe file('/etc/cron.d/ganeti') do
   it { should be_mode 644 }
-  its(:content) {
-    should match /45 1 \* \* \* root \[ -x \/usr\/sbin\/ganeti-cleaner \] \&\& \/usr\/sbin\/ganeti-cleaner master/
-  }
+  its(:content) do
+    should match(%r{45 1 \* \* \* root \[ -x /usr/sbin/ganeti-cleaner \] && \
+/usr/sbin/ganeti-cleaner master})
+  end
 end
 
 # Currently the drbd module is not included with the kernel installed on the
 # Ubuntu/Debian bento boxes, so lets skip those tests for now.
 case os[:family].downcase
 when 'redhat', 'centos'
-  %w[drbd kvm].each do |m|
+  %w(drbd kvm).each do |m|
     describe kernel_module(m) do
       it { should be_loaded }
     end
@@ -44,19 +55,19 @@ when 'redhat', 'centos'
 
   # make sure drbd is loaded with the correct module parameters.
   describe file('/sys/module/drbd/parameters/usermode_helper') do
-    its(:content) { should match /\/bin\/true/ }
+    its(:content) { should match(%r{/bin/true}) }
   end
 
   describe file('/sys/module/drbd/parameters/minor_count') do
-    its(:content) { should match /128/ }
+    its(:content) { should match(/128/) }
   end
 end
 
 # Make sure lvm.conf excludes drbd
 describe file('/etc/lvm/lvm.conf') do
-  its(:content) {
-    should match /filter = \[ \"a\/\.\*\/\", \"r\|\/dev\/drbd\.\*\|\" \]/
-  }
+  its(:content) do
+    should match(%r{filter = \[ "a/.\*/", "r\|/dev/drbd.\*\|" \]})
+  end
 end
 
 # Test rapi users

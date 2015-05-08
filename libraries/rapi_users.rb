@@ -6,10 +6,10 @@ require 'digest'
 #   'write' => true # or false
 def rapi_users(h)
   rapi_users = []
-  h.reject {|k,v| k == 'id' }.each_pair do |username,opts|
-    md5 =  username + ":Ganeti Remote API:" + opts['password']
-    md5 = Digest::MD5.new().update(md5).hexdigest
-    rapi_users << "#{username} {HA1}#{md5} #{opts['write'] ? "write" : ""}"
+  h.reject { |k| k == 'id' }.each_pair do |username, opts|
+    rapi_user =  "#{username}:Ganeti Remote API:#{opts['password']}"
+    md5 = Digest::MD5.new.update(rapi_user).hexdigest
+    rapi_users << "#{username} {HA1}#{md5} #{opts['write'] ? 'write' : ''}"
   end
-  return rapi_users.join("\n")
+  rapi_users.join("\n")
 end
