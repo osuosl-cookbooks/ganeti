@@ -7,8 +7,8 @@ require 'digest'
 def rapi_users(h)
   rapi_users = []
   h.reject { |k| k == 'id' }.each_pair do |username, opts|
-    md5 =  username + ':Ganeti Remote API:' + opts['password']
-    md5 = Digest::MD5.new.update(md5).hexdigest
+    rapi_user =  "#{username}:Ganeti Remote API:#{opts['password']}"
+    md5 = Digest::MD5.new.update(rapi_user).hexdigest
     rapi_users << "#{username} {HA1}#{md5} #{opts['write'] ? 'write' : ''}"
   end
   rapi_users.join("\n")
