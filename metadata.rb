@@ -14,3 +14,7 @@ depends          'modules'
 depends          'yum-elrepo'
 depends          'yum-epel'
 depends          'hostsfile'
+
+supports         'centos', '~> 6'
+supports         'ubuntu', '12.04'
+supports         'debian', '~> 7'
