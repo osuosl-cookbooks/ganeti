@@ -15,6 +15,6 @@ depends          'yum-elrepo'
 depends          'yum-epel'
 depends          'hostsfile'
 
-supports         'centos', '~> 6'
+supports         'centos', '~> 6.0'
 supports         'ubuntu', '12.04'
-supports         'debian', '~> 7'
+supports         'debian', '~> 7.0'
