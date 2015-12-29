@@ -1,29 +1,19 @@
 ---
-driver:
-  name: vagrant
-
 provisioner:
   name: chef_solo
-
-platforms:
-  - name: centos-6.6
-  - name: ubuntu-12.04
-    run_list:
-      - recipe[apt::default]
-  - name: debian-7
-    run_list:
-      - recipe[apt::default]
 
 suites:
   - name: default
     run_list:
-    - recipe[ganeti]
-    excludes: [ "debian-7" ]
+      - recipe[ganeti]
+    excludes:
+      - debian-7
   - name: master
     run_list:
-    - recipe[ganeti-test]
-    - recipe[ganeti]
-    excludes: [ "debian-7" ]
+      - recipe[ganeti-test]
+      - recipe[ganeti]
+    excludes:
+      - debian-7
     provisioner:
       data_bags_path: test/integration/data_bags
       encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret
@@ -32,11 +22,11 @@ suites:
         master-node: true
         cluster:
           disk-templates:
-            - "diskless"
-          master-netdev: "lo"
+            - diskless
+          master-netdev: lo
           enabled-hypervisors:
-            - "fake"
+            - fake
           nic:
-            mode: "routed"
-            link: "100"
-          name: "ganeti.local"
+            mode: routed
+            link: '100'
+          name: ganeti.local
