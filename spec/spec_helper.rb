@@ -3,7 +3,6 @@ require 'chefspec/berkshelf'
 
 ChefSpec::Coverage.start! { add_filter 'ganeti' }
 
-
 CENTOS_6 = {
   platform: 'centos',
   version: '6.7'

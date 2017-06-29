@@ -6,4 +6,3 @@ description      'Installs/Configures ganeti-test'
 long_description ''
 version          '0.1.0'
 depends          'ganeti'
-
