@@ -8,6 +8,7 @@ description      'Installs/Configures ganeti'
 long_description 'Installs/Configures ganeti'
 version          '0.1.0'
 supports         'ubuntu', '~> 12.04'
+supports         'ubuntu', '~> 14.04'
 supports         'centos', '~> 6.0'
 
 depends          'apt'

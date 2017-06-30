@@ -13,9 +13,15 @@ UBUNTU_12_04 = {
   version: '12.04'
 }.freeze
 
+UBUNTU_14_04 = {
+  platform: 'ubuntu',
+  version: '14.04'
+}.freeze
+
 ALL_PLATFORMS = [
   CENTOS_6,
-  UBUNTU_12_04
+  UBUNTU_12_04,
+  UBUNTU_14_04
 ].freeze
 
 RSpec.configure do |config|
