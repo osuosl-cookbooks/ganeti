@@ -5,14 +5,26 @@ set :backend, :exec
 
 case os[:family].downcase
 when 'redhat', 'centos'
-  packages = %w(
-    drbd83-utils
-    ganeti
-    kmod-drbd83
-    lvm2
-    qemu-kvm
-    qemu-kvm-tools
-  )
+  case os[:release].to_i
+  when 6
+    packages = %w(
+      drbd83-utils
+      ganeti
+      kmod-drbd83
+      lvm2
+      qemu-kvm
+      qemu-kvm-tools
+    )
+  when 7
+    packages = %w(
+      drbd84-utils
+      ganeti
+      kmod-drbd84
+      lvm2
+      qemu-kvm
+      qemu-kvm-tools
+    )
+  end
 when 'debian', 'ubuntu'
   packages = %w(
     drbd8-utils
@@ -82,6 +94,9 @@ end
 ganeti_version = `ganeti-noded --version | awk '{print $3}'`
 ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0')
                     %w(noded masterd rapi luxid confd)
+                  # mond is excluded on CentOS 7 for whatever reason
+                  elsif os[:release].to_i == 7 && os[:family] == 'redhat'
+                    %w(noded wconfd rapi luxid)
                   else
                     %w(noded wconfd rapi luxid mond)
                   end

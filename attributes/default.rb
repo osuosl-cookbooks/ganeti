@@ -32,6 +32,10 @@ default['ganeti']['packages']['kvm'] = value_for_platform_family(
   'debian' => ['qemu-kvm']
 )
 default['ganeti']['packages']['common'] = value_for_platform_family(
-  'rhel' => ['drbd83-utils', 'kmod-drbd83'],
-  'debian' => ['drbd8-utils']
+  'rhel' => if node['platform_version'].to_i < 7
+              %w(drbd83-utils kmod-drbd83)
+            else
+              %w(drbd84-utils kmod-drbd84)
+            end,
+  'debian' => %w(drbd8-utils)
 )
