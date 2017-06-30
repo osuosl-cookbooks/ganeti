@@ -32,7 +32,7 @@ when 'rhel', 'centos'
 when 'ubuntu'
   include_recipe 'apt'
   apt_repository 'ganeti' do
-    uri 'http://ppa.launchpad.net/pkg-ganeti-devel/lts/ubuntu '
+    uri 'ppa:pkg-ganeti-devel/lts'
     distribution node['lsb']['codename']
     components ['main']
     keyserver 'keyserver.ubuntu.com'
