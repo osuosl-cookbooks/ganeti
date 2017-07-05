@@ -38,6 +38,10 @@ end
 
 package 'ganeti-instance-image'
 
+directory ::File.join(instance_image['config_dir'], 'variants') do
+  recursive true
+end
+
 template '/etc/default/ganeti-instance-image' do
   source 'defaults.sh.erb'
   variables(params: instance_image['config_defaults'])

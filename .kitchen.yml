@@ -47,3 +47,4 @@ suites:
   - name: instance_image
     run_list:
       - recipe[ganeti::instance_image]
+      - recipe[ganeti-test::instance_image_variant]
