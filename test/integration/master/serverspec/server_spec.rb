@@ -1,4 +1,5 @@
 require 'serverspec'
+require 'open3'
 
 set :backend, :exec
 
@@ -78,7 +79,14 @@ describe file('/var/lib/ganeti/rapi/users') do
 end
 
 # Test ganeti processes
-%w(noded masterd rapi luxid confd).each do |d|
+ganeti_version = `ganeti-noded --version | awk '{print $3}'`
+ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0')
+                    %w(noded masterd rapi luxid confd)
+                  else
+                    %w(noded wconfd rapi luxid mond)
+                  end
+
+ganeti_services.each do |d|
   describe process("ganeti-#{d}") do
     it { should be_running }
   end

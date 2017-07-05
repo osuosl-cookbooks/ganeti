@@ -5,25 +5,26 @@ driver:
 provisioner:
   name: chef_solo
 
+transport:
+  name: ssh
+
 platforms:
-  - name: centos-6.6
+  - name: centos-6.9
   - name: ubuntu-12.04
     run_list:
-      - recipe[apt::default]
-  - name: debian-7
+    - recipe[apt::default]
+  - name: ubuntu-14.04
     run_list:
-      - recipe[apt::default]
+    - recipe[apt::default]
 
 suites:
   - name: default
     run_list:
-    - recipe[ganeti]
-    excludes: [ "debian-7" ]
+      - recipe[ganeti]
   - name: master
     run_list:
-    - recipe[ganeti-test]
-    - recipe[ganeti]
-    excludes: [ "debian-7" ]
+      - recipe[ganeti-test]
+      - recipe[ganeti]
     provisioner:
       data_bags_path: test/integration/data_bags
       encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret

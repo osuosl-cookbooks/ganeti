@@ -32,7 +32,7 @@ when 'rhel', 'centos'
 when 'ubuntu'
   include_recipe 'apt'
   apt_repository 'ganeti' do
-    uri 'http://ppa.launchpad.net/pkg-ganeti-devel/lts/ubuntu '
+    uri 'ppa:pkg-ganeti-devel/lts'
     distribution node['lsb']['codename']
     components ['main']
     keyserver 'keyserver.ubuntu.com'
@@ -78,7 +78,8 @@ execute 'ganeti-initialize' do
     "--master-netdev=#{cluster['master-netdev']}",
     "--enabled-hypervisors=#{hypervisors}",
     "-N mode=#{nic_mode},link=#{nic_link}",
-    cluster['extra-opts'], cluster['name']].join(' ')
+    cluster['extra-opts'], cluster['name']
+  ].join(' ')
   creates '/var/lib/ganeti/config.data'
   only_if do
     node['fqdn'] == node['ganeti']['master-node'] ||
@@ -112,7 +113,8 @@ end
 
 begin
   rapi = Chef::EncryptedDataBagItem.load(
-    'ganeti', node['ganeti']['data_bag']['rapi_users'])
+    'ganeti', node['ganeti']['data_bag']['rapi_users']
+  )
 
   file '/var/lib/ganeti/rapi/users' do
     owner 'root'
