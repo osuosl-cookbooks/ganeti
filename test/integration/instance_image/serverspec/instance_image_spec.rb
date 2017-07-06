@@ -9,6 +9,7 @@ end
 %w(
   /etc/default/ganeti-instance-image
   /etc/ganeti/instance-image/variants.list
+  /etc/ganeti/instance-image/networks/instances
 ).each do |f|
   describe file(f) do
     it { should exist }
@@ -46,6 +47,16 @@ describe file('/etc/ganeti/instance-image/variants/centos-6.conf') do
   end
 end
 
-describe file('/etc/ganeti/instance-image/variants/debian.conf') do
-  it { should_not exist }
+describe file('/etc/ganeti/instance-image/networks/instances/foo.example.org') do
+  its(:content) { should match(/^ADDRESS="127.0.0.1"$/) }
+  its(:content) { should match(/^SUBNET="vlan100"$/) }
+end
+
+%w(
+  /etc/ganeti/instance-image/variants/debian.conf
+  /etc/ganeti/instance-image/networks/instances/bar.example.org
+).each do |d|
+  describe file(d) do
+    it { should_not exist }
+  end
 end

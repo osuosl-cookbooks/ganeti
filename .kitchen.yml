@@ -48,3 +48,4 @@ suites:
     run_list:
       - recipe[ganeti::instance_image]
       - recipe[ganeti-test::instance_image_variant]
+      - recipe[ganeti-test::instance_image_instance]

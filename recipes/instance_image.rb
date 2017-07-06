@@ -38,8 +38,13 @@ end
 
 package 'ganeti-instance-image'
 
-directory ::File.join(instance_image['config_dir'], 'variants') do
-  recursive true
+[
+  ::File.join(instance_image['config_dir'], 'variants'),
+  ::File.join(instance_image['config_dir'], 'networks', 'instances')
+].each do |d|
+  directory d do
+    recursive true
+  end
 end
 
 template '/etc/default/ganeti-instance-image' do

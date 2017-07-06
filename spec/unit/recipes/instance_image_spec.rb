@@ -16,8 +16,13 @@ describe 'ganeti::instance_image' do
       it do
         expect(chef_run).to install_package('ganeti-instance-image')
       end
-      it do
-        expect(chef_run).to create_directory('/etc/ganeti/instance-image/variants').with(recursive: true)
+      %w(
+        /etc/ganeti/instance-image/variants
+        /etc/ganeti/instance-image/networks/instances
+      ).each do |d|
+        it do
+          expect(chef_run).to create_directory(d).with(recursive: true)
+        end
       end
       it do
         expect(chef_run).to create_template('/etc/default/ganeti-instance-image')
