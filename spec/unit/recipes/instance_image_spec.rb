@@ -19,6 +19,7 @@ describe 'ganeti::instance_image' do
       %w(
         /etc/ganeti/instance-image/variants
         /etc/ganeti/instance-image/networks/instances
+        /etc/ganeti/instance-image/networks/subnets
       ).each do |d|
         it do
           expect(chef_run).to create_directory(d).with(recursive: true)

@@ -10,6 +10,7 @@ end
   /etc/default/ganeti-instance-image
   /etc/ganeti/instance-image/variants.list
   /etc/ganeti/instance-image/networks/instances
+  /etc/ganeti/instance-image/networks/subnets
 ).each do |f|
   describe file(f) do
     it { should exist }
@@ -52,9 +53,15 @@ describe file('/etc/ganeti/instance-image/networks/instances/foo.example.org') d
   its(:content) { should match(/^SUBNET="vlan100"$/) }
 end
 
+describe file('/etc/ganeti/instance-image/networks/subnets/vlan100') do
+  its(:content) { should match(/^NETMASK="255.255.255.0"$/) }
+  its(:content) { should match(/^GATEWAY="10.0.0.1"$/) }
+end
+
 %w(
   /etc/ganeti/instance-image/variants/debian.conf
   /etc/ganeti/instance-image/networks/instances/bar.example.org
+  /etc/ganeti/instance-image/networks/subnets/vlan101
 ).each do |d|
   describe file(d) do
     it { should_not exist }
