@@ -8,6 +8,11 @@ CENTOS_6 = {
   version: '6.8'
 }.freeze
 
+CENTOS_7 = {
+  platform: 'centos',
+  version: '7.2.1511'
+}.freeze
+
 UBUNTU_12_04 = {
   platform: 'ubuntu',
   version: '12.04'
@@ -20,9 +25,16 @@ UBUNTU_14_04 = {
 
 ALL_PLATFORMS = [
   CENTOS_6,
+  CENTOS_7,
   UBUNTU_12_04,
   UBUNTU_14_04
 ].freeze
+
+shared_context 'common_stubs' do
+  before do
+    stub_command('/sbin/lvm dumpconfig global/use_lvmetad | grep use_lvmetad=1')
+  end
+end
 
 RSpec.configure do |config|
   config.log_level = :fatal

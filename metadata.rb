@@ -10,6 +10,7 @@ version          '1.0.0'
 supports         'ubuntu', '~> 12.04'
 supports         'ubuntu', '~> 14.04'
 supports         'centos', '~> 6.0'
+supports         'centos', '~> 7.0'
 
 depends          'apt'
 depends          'lvm'

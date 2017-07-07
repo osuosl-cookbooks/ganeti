@@ -4,14 +4,26 @@ set :backend, :exec
 
 case os[:family].downcase
 when 'redhat', 'centos'
-  packages = %w(
-    drbd83-utils
-    ganeti
-    kmod-drbd83
-    lvm2
-    qemu-kvm
-    qemu-kvm-tools
-  )
+  case os[:release].to_i
+  when 6
+    packages = %w(
+      drbd83-utils
+      ganeti
+      kmod-drbd83
+      lvm2
+      qemu-kvm
+      qemu-kvm-tools
+    )
+  when 7
+    packages = %w(
+      drbd84-utils
+      ganeti
+      kmod-drbd84
+      lvm2
+      qemu-kvm
+      qemu-kvm-tools
+    )
+  end
 when 'debian', 'ubuntu'
   packages = %w(
     drbd8-utils

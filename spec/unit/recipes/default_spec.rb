@@ -9,6 +9,7 @@ describe 'ganeti::default' do
           lsb_codename = node['lsb']['codename']
         end.converge(described_recipe)
       end
+      include_context 'common_stubs'
       it 'converges successfully' do
         expect { chef_run }.to_not raise_error
       end
@@ -77,7 +78,7 @@ describe 'ganeti::default' do
           )
       end
       case p
-      when CENTOS_6
+      when CENTOS_6, CENTOS_7
         %w(yum-epel yum-elrepo).each do |r|
           it do
             expect(chef_run).to include_recipe(r)
@@ -96,9 +97,18 @@ describe 'ganeti::default' do
               gpgkey: nil
             )
         end
-        %w(qemu-kvm qemu-kvm-tools drbd83-utils kmod-drbd83).each do |pkg|
-          it do
-            expect(chef_run).to install_package(pkg)
+        case p
+        when CENTOS_6
+          %w(qemu-kvm qemu-kvm-tools drbd83-utils kmod-drbd83).each do |pkg|
+            it do
+              expect(chef_run).to install_package(pkg)
+            end
+          end
+        when CENTOS_7
+          %w(qemu-kvm qemu-kvm-tools drbd84-utils kmod-drbd84).each do |pkg|
+            it do
+              expect(chef_run).to install_package(pkg)
+            end
           end
         end
       when UBUNTU_12_04, UBUNTU_14_04
