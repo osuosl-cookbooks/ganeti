@@ -8,6 +8,7 @@ provisioner:
   encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret
   attributes:
     ganeti:
+      drbd: false
       cluster:
         disk-templates:
           - "diskless"
@@ -44,6 +45,14 @@ suites:
     attributes:
       ganeti:
         master-node: true
+  - name: drbd
+    run_list:
+      - recipe[ganeti-test]
+      - recipe[ganeti]
+    attributes:
+      ganeti:
+        master-node: true
+        drbd: true
   - name: instance_image
     run_list:
       - recipe[ganeti::instance_image]

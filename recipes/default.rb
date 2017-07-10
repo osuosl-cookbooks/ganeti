@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 include_recipe 'yum-epel' if platform_family?('rhel')
-include_recipe 'yum-elrepo' if platform_family?('rhel')
 include_recipe 'apt' if platform?('ubuntu')
 
 yum_repository 'ganeti' do
@@ -35,14 +34,11 @@ apt_repository 'ganeti' do
 end
 
 include_recipe 'lvm'
+include_recipe 'ganeti::_drbd' if node['ganeti']['drbd']
 
-packages = node['ganeti']['packages'][node['ganeti']['hypervisor']] +
-           node['ganeti']['packages']['common']
+packages = node['ganeti']['packages'][node['ganeti']['hypervisor']]
 
 packages.each { |p| package p }
-
-# load/configure drbd/kvm modules
-include_recipe 'modules'
 
 package node['ganeti']['package_name'] do
   version node['ganeti']['version'] if node['ganeti']['version']
@@ -84,11 +80,6 @@ end
 service 'ganeti' do
   supports status: true, restart: true
   action [:enable, :start]
-end
-
-# Disable drbd service, ganeti manages it directly
-service 'drbd' do
-  action [:disable, :stop]
 end
 
 cookbook_file '/etc/cron.d/ganeti' do

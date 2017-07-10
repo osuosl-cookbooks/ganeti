@@ -7,18 +7,14 @@ when 'redhat', 'centos'
   case os[:release].to_i
   when 6
     packages = %w(
-      drbd83-utils
       ganeti
-      kmod-drbd83
       lvm2
       qemu-kvm
       qemu-kvm-tools
     )
   when 7
     packages = %w(
-      drbd84-utils
       ganeti
-      kmod-drbd84
       lvm2
       qemu-kvm
       qemu-kvm-tools
@@ -26,7 +22,6 @@ when 'redhat', 'centos'
   end
 when 'debian', 'ubuntu'
   packages = %w(
-    drbd8-utils
     ganeti2
     lvm2
     qemu-kvm
@@ -43,10 +38,6 @@ describe service('ganeti') do
   it { should be_enabled }
 end
 
-describe service('drbd') do
-  it { should_not be_enabled }
-end
-
 describe file('/etc/cron.d/ganeti') do
   it { should be_mode 644 }
   its(:content) do
@@ -59,19 +50,8 @@ end
 # Ubuntu/Debian bento boxes, so lets skip those tests for now.
 case os[:family].downcase
 when 'redhat', 'centos'
-  %w(drbd kvm).each do |m|
-    describe kernel_module(m) do
-      it { should be_loaded }
-    end
-  end
-
-  # make sure drbd is loaded with the correct module parameters.
-  describe file('/sys/module/drbd/parameters/usermode_helper') do
-    its(:content) { should match(%r{/bin/true}) }
-  end
-
-  describe file('/sys/module/drbd/parameters/minor_count') do
-    its(:content) { should match(/128/) }
+  describe kernel_module('kvm') do
+    it { should be_loaded }
   end
 end
 

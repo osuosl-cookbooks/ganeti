@@ -1,5 +1,6 @@
 default['ganeti']['version'] = nil
 default['ganeti']['hypervisor'] = 'kvm'
+default['ganeti']['drbd'] = true
 default['ganeti']['master-node'] = nil
 default['ganeti']['bin-path'] = '/usr/sbin'
 default['ganeti']['data_bag']['rapi_users'] = 'rapi_users'
@@ -37,11 +38,14 @@ default['ganeti']['packages']['kvm'] = value_for_platform_family(
   'rhel' => ['qemu-kvm', 'qemu-kvm-tools'],
   'debian' => ['qemu-kvm']
 )
-default['ganeti']['packages']['common'] = value_for_platform_family(
-  'rhel' => if node['platform_version'].to_i < 7
-              %w(drbd83-utils kmod-drbd83)
-            else
-              %w(drbd84-utils kmod-drbd84)
-            end,
-  'debian' => %w(drbd8-utils)
-)
+default['ganeti']['packages']['drbd'] =
+  case node['platform_family']
+  when 'rhel'
+    if node['platform_version'].to_i < 7
+      %w(drbd83-utils kmod-drbd83)
+    else
+      %w(drbd84-utils kmod-drbd84)
+    end
+  when 'debian'
+    %w(drbd8-utils)
+  end
