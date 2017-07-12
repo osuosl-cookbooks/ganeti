@@ -124,6 +124,14 @@ task :unit do
     run_command('rspec')
 end
 
+desc 'Multi-node Integration with Vagrant'
+task :multi_node do
+    run_command('rm -rf cookbooks nodes Berksfile.lock')
+    run_command('berks vendor cookbooks')
+    run_command('mkdir nodes')
+    run_command('vagrant up')
+end
+
 desc 'Run all tests'
 task test: [:style, :lint, :unit]
 

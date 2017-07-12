@@ -1,0 +1,16 @@
+{
+  "env_run_lists": {},
+  "run_list": [
+    "recipe[ganeti-test::vagrant]"
+  ],
+  "chef_type": "role",
+  "override_attributes": {
+    "ganeti": {
+      "master": true
+    }
+  },
+  "default_attributes": {},
+  "json_class": "Chef::Role",
+  "description": "Ganeti Master Role",
+  "name": "ganeti_master"
+}

@@ -6,7 +6,7 @@ hostsfile_entry '192.168.125.10' do
 end
 # Make sure the hostname isn't set to localhost
 # NOTE: This usually happens on vagrant systems
-hostsfile_entry node['network']['interfaces']['eth0']['addresses'].keys[1] do
+hostsfile_entry node['network']['interfaces'][node['ganeti-test']['interface']]['addresses'].keys[1] do
   hostname node['fqdn']
   aliases [node['hostname']]
   unique true
