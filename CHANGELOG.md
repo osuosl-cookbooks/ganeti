@@ -1,3 +1,7 @@
+1.1.1 (2017-07-12)
+------------------
+- Refactor yum/apt repository support
+
 1.1.0 (2017-07-12)
 ------------------
 - instance_image recipe imported from ganeti-instance-image
