@@ -88,7 +88,7 @@ describe 'ganeti::default' do
           expect(chef_run).to install_package('ganeti').with(version: nil)
         end
         it do
-          expect(chef_run).to add_yum_repository('ganeti')
+          expect(chef_run).to create_yum_repository('ganeti')
             .with(
               repositoryid: 'ganeti',
               description: 'Integ Ganeti Packages $releasever - $basearch',

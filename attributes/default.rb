@@ -17,11 +17,17 @@ default['ganeti']['cluster']['nic']['link'] = 'br0'
 default['ganeti']['cluster']['extra-opts'] = nil
 
 # YUM repo for Ganeti
-default['ganeti']['yum']['uri'] = 'http://jfut.integ.jp/linux/ganeti/$releasever/$basearch'
-default['ganeti']['yum']['description'] =
-  'Integ Ganeti Packages $releasever - $basearch'
+default['ganeti']['yum']['url'] = 'http://jfut.integ.jp/linux/ganeti/$releasever/$basearch'
+default['ganeti']['yum']['description'] = 'Integ Ganeti Packages $releasever - $basearch'
 default['ganeti']['yum']['gpgcheck'] = false
 default['ganeti']['yum']['gpgkey'] = nil
+
+# APT repo for Ganeti on Ubuntu
+default['ganeti']['apt']['uri'] = 'ppa:pkg-ganeti-devel/lts'
+default['ganeti']['apt']['distribution'] = node['lsb']['codename']
+default['ganeti']['apt']['components'] = %w(main)
+default['ganeti']['apt']['keyserver'] = 'keyserver.ubuntu.com'
+default['ganeti']['apt']['key'] = '38520275'
 
 default['ganeti']['package_name'] = value_for_platform_family(
   'rhel' => 'ganeti',
