@@ -1,3 +1,7 @@
+1.1.0 (2017-07-12)
+------------------
+- instance_image recipe imported from ganeti-instance-image
+
 1.0.1 (2017-07-07)
 ------------------
 - CentOS 7 support
