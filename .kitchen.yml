@@ -10,6 +10,7 @@ transport:
 
 platforms:
   - name: centos-6.9
+  - name: centos-7.3
   - name: ubuntu-12.04
     run_list:
     - recipe[apt::default]
