@@ -16,28 +16,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-case node['platform']
-# FC024: Need to use platform here since we don't have a PPA for Debian
-when 'rhel', 'centos'
-  include_recipe 'yum-epel'
-  include_recipe 'yum-elrepo'
-  yum_repository 'ganeti' do
-    repositoryid 'ganeti'
-    description node['ganeti']['yum']['description']
-    url node['ganeti']['yum']['uri']
-    gpgcheck node['ganeti']['yum']['gpgcheck']
-    gpgkey node['ganeti']['yum']['gpgkey']
-    action :add
+include_recipe 'yum-epel' if platform_family?('rhel')
+include_recipe 'yum-elrepo' if platform_family?('rhel')
+include_recipe 'apt' if platform?('ubuntu')
+
+yum_repository 'ganeti' do
+  node['ganeti']['yum'].each do |key, value|
+    send(key.to_sym, value)
   end
-when 'ubuntu'
-  include_recipe 'apt'
-  apt_repository 'ganeti' do
-    uri 'ppa:pkg-ganeti-devel/lts'
-    distribution node['lsb']['codename']
-    components ['main']
-    keyserver 'keyserver.ubuntu.com'
-    key '38520275'
+  only_if { platform_family?('rhel') }
+end
+
+apt_repository 'ganeti' do
+  node['ganeti']['apt'].each do |key, value|
+    send(key.to_sym, value)
   end
+  only_if { platform?('ubuntu') }
 end
 
 include_recipe 'lvm'
