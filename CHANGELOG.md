@@ -1,3 +1,7 @@
+1.2.0 (2017-07-13)
+------------------
+- Separate drbd into it's own recipe
+
 1.1.1 (2017-07-12)
 ------------------
 - Refactor yum/apt repository support
