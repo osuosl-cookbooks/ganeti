@@ -13,10 +13,8 @@ describe 'ganeti::default' do
       it 'converges successfully' do
         expect { chef_run }.to_not raise_error
       end
-      %w(lvm modules).each do |r|
-        it do
-          expect(chef_run).to include_recipe(r)
-        end
+      it do
+        expect(chef_run).to include_recipe('lvm')
       end
       %w(/root/.ssh /var/lib/ganeti/rapi).each do |d|
         it do
@@ -54,12 +52,6 @@ describe 'ganeti::default' do
         expect(chef_run).to start_service('ganeti').with(supports: { status: true, restart: true })
       end
       it do
-        expect(chef_run).to disable_service('drbd')
-      end
-      it do
-        expect(chef_run).to stop_service('drbd')
-      end
-      it do
         expect(chef_run).to create_cookbook_file('/etc/cron.d/ganeti')
           .with(
             source: 'ganeti-cron',
@@ -79,10 +71,8 @@ describe 'ganeti::default' do
       end
       case p
       when CENTOS_6, CENTOS_7
-        %w(yum-epel yum-elrepo).each do |r|
-          it do
-            expect(chef_run).to include_recipe(r)
-          end
+        it do
+          expect(chef_run).to include_recipe('yum-epel')
         end
         it do
           expect(chef_run).to install_package('ganeti').with(version: nil)
@@ -99,13 +89,13 @@ describe 'ganeti::default' do
         end
         case p
         when CENTOS_6
-          %w(qemu-kvm qemu-kvm-tools drbd83-utils kmod-drbd83).each do |pkg|
+          %w(qemu-kvm qemu-kvm-tools).each do |pkg|
             it do
               expect(chef_run).to install_package(pkg)
             end
           end
         when CENTOS_7
-          %w(qemu-kvm qemu-kvm-tools drbd84-utils kmod-drbd84).each do |pkg|
+          %w(qemu-kvm qemu-kvm-tools).each do |pkg|
             it do
               expect(chef_run).to install_package(pkg)
             end
@@ -125,10 +115,8 @@ describe 'ganeti::default' do
               key: '38520275'
             )
         end
-        %w(qemu-kvm drbd8-utils).each do |pkg|
-          it do
-            expect(chef_run).to install_package(pkg)
-          end
+        it do
+          expect(chef_run).to install_package('qemu-kvm')
         end
         it do
           expect(chef_run).to install_package('ganeti2').with(version: nil)
