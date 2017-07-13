@@ -8,6 +8,7 @@ end
 
 %w(
   /etc/default/ganeti-instance-image
+  /etc/ganeti/instance-image/hooks
   /etc/ganeti/instance-image/variants.list
   /etc/ganeti/instance-image/networks/instances
   /etc/ganeti/instance-image/networks/subnets
@@ -66,4 +67,27 @@ end
   describe file(d) do
     it { should_not exist }
   end
+end
+
+%w(
+  /etc/ganeti/instance-image/hooks/create
+  /etc/ganeti/instance-image/hooks/grub
+  /etc/ganeti/instance-image/hooks/source
+).each do |h|
+  describe file(h) do
+    it { should be_executable }
+  end
+end
+
+%w(
+  /etc/ganeti/instance-image/hooks/foo
+  /etc/ganeti/instance-image/hooks/disable
+).each do |h|
+  describe file(h) do
+    it { should_not be_executable }
+  end
+end
+
+describe file('/etc/ganeti/instance-image/hooks/delete') do
+  it { should_not exist }
 end
