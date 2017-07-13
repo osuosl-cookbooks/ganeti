@@ -1,3 +1,7 @@
+1.4.1 (2017-07-13)
+------------------
+- Don't manage ganeti-cron
+
 1.4.0 (2017-07-13)
 ------------------
 - instance_image_hook resource
