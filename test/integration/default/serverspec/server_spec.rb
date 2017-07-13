@@ -9,22 +9,17 @@ when 'redhat', 'centos'
     packages = %w(
       ganeti
       lvm2
-      qemu-kvm
-      qemu-kvm-tools
     )
   when 7
     packages = %w(
       ganeti
       lvm2
-      qemu-kvm
-      qemu-kvm-tools
     )
   end
 when 'debian', 'ubuntu'
   packages = %w(
     ganeti2
     lvm2
-    qemu-kvm
   )
 end
 
@@ -43,15 +38,6 @@ describe file('/etc/cron.d/ganeti') do
   its(:content) do
     should match(%r{45 1 \* \* \* root \[ -x /usr/sbin/ganeti-cleaner \] && \
 /usr/sbin/ganeti-cleaner master})
-  end
-end
-
-# Currently the drbd module is not included with the kernel installed on the
-# Ubuntu/Debian bento boxes, so lets skip those tests for now.
-case os[:family].downcase
-when 'redhat', 'centos'
-  describe kernel_module('kvm') do
-    it { should be_loaded }
   end
 end
 
