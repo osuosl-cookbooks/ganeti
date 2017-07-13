@@ -33,14 +33,6 @@ describe service('ganeti') do
   it { should be_enabled }
 end
 
-describe file('/etc/cron.d/ganeti') do
-  it { should be_mode 644 }
-  its(:content) do
-    should match(%r{45 1 \* \* \* root \[ -x /usr/sbin/ganeti-cleaner \] && \
-/usr/sbin/ganeti-cleaner master})
-  end
-end
-
 # Make sure lvm.conf excludes drbd
 describe file('/etc/lvm/lvm.conf') do
   its(:content) do
@@ -51,4 +43,8 @@ end
 # Test rapi users
 describe file('/var/lib/ganeti/rapi/users') do
   it { should_not be_file }
+end
+
+describe file('/etc/cron.d/ganeti') do
+  it { should exist }
 end

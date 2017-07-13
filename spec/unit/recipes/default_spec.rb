@@ -52,15 +52,6 @@ describe 'ganeti::default' do
         expect(chef_run).to start_service('ganeti').with(supports: { status: true, restart: true })
       end
       it do
-        expect(chef_run).to create_cookbook_file('/etc/cron.d/ganeti')
-          .with(
-            source: 'ganeti-cron',
-            owner: 'root',
-            group: 'root',
-            mode: '0644'
-          )
-      end
-      it do
         expect(chef_run).to create_cookbook_file('/etc/lvm/lvm.conf')
           .with(
             source: 'lvm.conf',
