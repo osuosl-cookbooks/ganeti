@@ -1,3 +1,7 @@
+1.3.0 (2017-07-13)
+------------------
+- Split out kvm code into its own recipe
+
 1.2.1 (2017-07-13)
 ------------------
 - Standardize kvm and ganeti attributes using case statements
