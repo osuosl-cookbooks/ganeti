@@ -30,14 +30,20 @@ default['ganeti']['apt']['components'] = %w(main)
 default['ganeti']['apt']['keyserver'] = 'keyserver.ubuntu.com'
 default['ganeti']['apt']['key'] = '38520275'
 
-default['ganeti']['package_name'] = value_for_platform_family(
-  'rhel' => 'ganeti',
-  'debian' => 'ganeti2'
-)
-default['ganeti']['packages']['kvm'] = value_for_platform_family(
-  'rhel' => ['qemu-kvm', 'qemu-kvm-tools'],
-  'debian' => ['qemu-kvm']
-)
+default['ganeti']['package_name'] =
+  case node['platform_family']
+  when 'rhel'
+    'ganeti'
+  when 'debian'
+    'ganeti2'
+  end
+default['ganeti']['packages']['kvm'] =
+  case node['platform_family']
+  when 'rhel'
+    %w(qemu-kvm qemu-kvm-tools)
+  when 'debian'
+    %w(qemu-kvm)
+  end
 default['ganeti']['packages']['drbd'] =
   case node['platform_family']
   when 'rhel'
