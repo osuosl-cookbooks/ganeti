@@ -1,3 +1,7 @@
+1.4.0 (2017-07-13)
+------------------
+- instance_image_hook resource
+
 1.3.1 (2017-07-13)
 ------------------
 - Update lvm.conf and split by platform versions
