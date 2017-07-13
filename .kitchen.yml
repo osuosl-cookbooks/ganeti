@@ -53,6 +53,12 @@ suites:
       ganeti:
         master-node: true
         drbd: true
+  - name: kvm
+    run_list:
+      - recipe[ganeti]
+    attributes:
+      ganeti:
+        hypervisor: kvm
   - name: instance_image
     run_list:
       - recipe[ganeti::instance_image]

@@ -87,20 +87,6 @@ describe 'ganeti::default' do
               gpgkey: nil
             )
         end
-        case p
-        when CENTOS_6
-          %w(qemu-kvm qemu-kvm-tools).each do |pkg|
-            it do
-              expect(chef_run).to install_package(pkg)
-            end
-          end
-        when CENTOS_7
-          %w(qemu-kvm qemu-kvm-tools).each do |pkg|
-            it do
-              expect(chef_run).to install_package(pkg)
-            end
-          end
-        end
       when UBUNTU_12_04, UBUNTU_14_04
         it do
           expect(chef_run).to include_recipe('apt')
@@ -114,9 +100,6 @@ describe 'ganeti::default' do
               keyserver: 'keyserver.ubuntu.com',
               key: '38520275'
             )
-        end
-        it do
-          expect(chef_run).to install_package('qemu-kvm')
         end
         it do
           expect(chef_run).to install_package('ganeti2').with(version: nil)

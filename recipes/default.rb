@@ -34,11 +34,8 @@ apt_repository 'ganeti' do
 end
 
 include_recipe 'lvm'
+include_recipe "ganeti::_#{node['ganeti']['hypervisor']}"
 include_recipe 'ganeti::_drbd' if node['ganeti']['drbd']
-
-packages = node['ganeti']['packages'][node['ganeti']['hypervisor']]
-
-packages.each { |p| package p }
 
 package node['ganeti']['package_name'] do
   version node['ganeti']['version'] if node['ganeti']['version']
