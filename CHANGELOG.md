@@ -1,3 +1,7 @@
+1.3.1 (2017-07-13)
+------------------
+- Update lvm.conf and split by platform versions
+
 1.3.0 (2017-07-13)
 ------------------
 - Split out kvm code into its own recipe
