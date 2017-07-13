@@ -79,13 +79,6 @@ service 'ganeti' do
   action [:enable, :start]
 end
 
-cookbook_file '/etc/cron.d/ganeti' do
-  source 'ganeti-cron'
-  owner 'root'
-  group 'root'
-  mode '0644'
-end
-
 cookbook_file '/etc/lvm/lvm.conf' do
   source 'lvm.conf'
   owner 'root'
