@@ -65,3 +65,4 @@ suites:
       - recipe[ganeti-test::instance_image_variant]
       - recipe[ganeti-test::instance_image_instance]
       - recipe[ganeti-test::instance_image_subnet]
+      - recipe[ganeti-test::instance_image_hook]

@@ -39,6 +39,7 @@ end
 package 'ganeti-instance-image'
 
 [
+  ::File.join(instance_image['config_dir'], 'hooks'),
   ::File.join(instance_image['config_dir'], 'variants'),
   ::File.join(instance_image['config_dir'], 'networks', 'instances'),
   ::File.join(instance_image['config_dir'], 'networks', 'subnets')

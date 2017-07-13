@@ -17,6 +17,7 @@ describe 'ganeti::instance_image' do
         expect(chef_run).to install_package('ganeti-instance-image')
       end
       %w(
+        /etc/ganeti/instance-image/hooks
         /etc/ganeti/instance-image/variants
         /etc/ganeti/instance-image/networks/instances
         /etc/ganeti/instance-image/networks/subnets
