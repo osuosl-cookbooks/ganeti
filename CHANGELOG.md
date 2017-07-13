@@ -1,3 +1,7 @@
+1.2.1 (2017-07-13)
+------------------
+- Standardize kvm and ganeti attributes using case statements
+
 1.2.0 (2017-07-13)
 ------------------
 - Separate drbd into it's own recipe
