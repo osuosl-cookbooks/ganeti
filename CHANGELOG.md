@@ -1,3 +1,7 @@
+1.4.2 (2017-07-20)
+------------------
+- Don't set default settings for instance-image
+
 1.4.1 (2017-07-13)
 ------------------
 - Don't manage ganeti-cron
