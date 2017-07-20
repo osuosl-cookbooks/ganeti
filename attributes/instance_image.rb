@@ -12,24 +12,4 @@ default['ganeti']['instance_image']['apt'] = {
   'components' => %w(main),
   'key' => 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/repo.gpg'
 }
-default['ganeti']['instance_image']['config_defaults'] = {
-  'arch' => 'x86_64',
-  'boot_size' => '',
-  'cache_dir' => '/var/lib/cache/ganeti-instance-image',
-  'cdinstall' => 'no',
-  'customize_dir' => '',
-  'export_dir' => '',
-  'filesystem' => 'ext4',
-  'image_cleanup' => 'no',
-  'image_debug' => '0',
-  'image_dir' => '',
-  'image_name' => '',
-  'image_type' => 'dump',
-  'image_url' => '',
-  'image_verify' => 'yes',
-  'kernel_args' => '',
-  'nomount' => '',
-  'overlay' => '',
-  'swap_size' => '',
-  'swap' => 'yes'
-}
+default['ganeti']['instance_image']['config_defaults'] = {}
