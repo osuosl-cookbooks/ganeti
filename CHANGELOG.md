@@ -1,3 +1,7 @@
+1.4.3 (2017-11-30)
+------------------
+- Work around issue with --enabled-disk-templates on older versions of Ganeti
+
 1.4.2 (2017-07-20)
 ------------------
 - Don't set default settings for instance-image
