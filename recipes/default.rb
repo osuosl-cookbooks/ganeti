@@ -52,16 +52,26 @@ end
   end
 end
 
+# --enabled-disk-templates was added in Ganeti 2.9.0 so let's add logic to deal with that not being available to older
+# versions of Ganeti
+disk_templates = node['ganeti']['cluster']['disk-templates'].join(',')
+enabled_disk_templates =
+  if node['ganeti']['version'] && Gem::Version.new(node['ganeti']['version']) >= Gem::Version.new('2.9.0')
+    "--enabled-disk-templates=#{disk_templates}"
+  # By default, we don't set version so let's assume we can use this option
+  elsif node['ganeti']['version'].nil?
+    "--enabled-disk-templates=#{disk_templates}"
+  end
+
 # Initialize cluster if set as a master-node
 execute 'ganeti-initialize' do
   cluster = node['ganeti']['cluster']
-  disk_templates = cluster['disk-templates'].join(',')
   hypervisors = cluster['enabled-hypervisors'].join(',')
   nic_mode = cluster['nic']['mode']
   nic_link = cluster['nic']['link']
   command [
     "#{node['ganeti']['bin-path']}/gnt-cluster init",
-    "--enabled-disk-templates=#{disk_templates}",
+    enabled_disk_templates,
     "--master-netdev=#{cluster['master-netdev']}",
     "--enabled-hypervisors=#{hypervisors}",
     "-N mode=#{nic_mode},link=#{nic_link}",
