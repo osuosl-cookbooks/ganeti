@@ -85,8 +85,17 @@ execute 'ganeti-initialize' do
 end
 
 service 'ganeti' do
+  service_name lazy { ::File.exist?('/etc/init.d/ganeti') ? 'ganeti' : 'ganeti.target' }
   supports status: true, restart: true
   action [:enable, :start]
+end
+
+node['ganeti']['services'].each do |ganeti_service|
+  service ganeti_service do
+    supports status: true, restart: true
+    action [:enable, :start]
+    not_if { ::File.exist?('/etc/init.d/ganeti') }
+  end
 end
 
 cookbook_file '/etc/lvm/lvm.conf' do

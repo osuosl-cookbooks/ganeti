@@ -19,6 +19,9 @@ provisioner:
           mode: "routed"
           link: "100"
         name: "ganeti.local"
+    yum:
+      epel:
+        baseurl: http://epel.osuosl.org/$releasever/$basearch
 
 transport:
   name: ssh
@@ -45,6 +48,7 @@ suites:
     attributes:
       ganeti:
         master-node: true
+        drbd: true
   - name: drbd
     run_list:
       - recipe[ganeti-test]
