@@ -1,3 +1,7 @@
+1.5.0 (2018-01-02)
+------------------
+- Properly enable systemd services
+
 1.4.3 (2017-11-30)
 ------------------
 - Work around issue with --enabled-disk-templates on older versions of Ganeti
