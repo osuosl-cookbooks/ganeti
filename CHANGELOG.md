@@ -1,3 +1,7 @@
+1.5.1 (2018-01-02)
+------------------
+- Properly set /root/.ssh to 0700
+
 1.5.0 (2018-01-02)
 ------------------
 - Properly enable systemd services
