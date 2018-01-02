@@ -1,7 +1,15 @@
 default['ganeti']['version'] = nil
 default['ganeti']['hypervisor'] = 'kvm'
+default['ganeti']['services'] = %w(
+  ganeti-confd
+  ganeti-kvmd
+  ganeti-luxid
+  ganeti-noded
+  ganeti-rapi
+  ganeti-wconfd
+)
 default['ganeti']['drbd'] = true
-default['ganeti']['master-node'] = nil
+default['ganeti']['master-node'] = false
 default['ganeti']['bin-path'] = '/usr/sbin'
 default['ganeti']['data_bag']['rapi_users'] = 'rapi_users'
 default['modules']['modules'] = [

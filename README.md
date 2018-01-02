@@ -5,6 +5,7 @@ This cookbook is designed to install Ganeti.
 ## Supported Platforms
 
 * CentOS 6
+* CentOS 7
 * Ubuntu 12.04
 * Ubuntu 14.04
 
@@ -14,7 +15,7 @@ This cookbook is designed to install Ganeti.
 - `['ganeti']['hypervisor']` - Hypervisor to install and use. Defaults to `kvm`
 - `['ganeti']['master-node']` - FQDN of the host that will be set as the initial
   master and will initialize the cluster. A value of `true` is also valid but
-  only used for testing purposes or single master clusters. Defaults to `nil`.
+  only used for testing purposes or single master clusters. Defaults to `false`.
 - `['ganeti']['bin-path']` - Path for the Ganeti binaries. Defaults to
   `/usr/sbin/`.
 - `['ganeti']['data_bag']` - Data bag name for RAPI users. Defaults to

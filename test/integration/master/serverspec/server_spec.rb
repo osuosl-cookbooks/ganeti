@@ -5,6 +5,7 @@ set :backend, :exec
 
 case os[:family].downcase
 when 'redhat', 'centos'
+  cleaner_user = 'root'
   case os[:release].to_i
   when 6
     packages = %w(
@@ -15,6 +16,7 @@ when 'redhat', 'centos'
       qemu-kvm
       qemu-kvm-tools
     )
+    services = %w(ganeti)
   when 7
     packages = %w(
       drbd84-utils
@@ -24,6 +26,15 @@ when 'redhat', 'centos'
       qemu-kvm
       qemu-kvm-tools
     )
+    services = %w(
+      ganeti
+      ganeti-confd
+      ganeti-kvmd
+      ganeti-luxid
+      ganeti-noded
+      ganeti-rapi
+      ganeti-wconfd
+    )
   end
 when 'debian', 'ubuntu'
   packages = %w(
@@ -32,6 +43,8 @@ when 'debian', 'ubuntu'
     lvm2
     qemu-kvm
   )
+  cleaner_user = 'gnt-masterd'
+  services = %w(ganeti)
 end
 
 packages.each do |p|
@@ -40,8 +53,10 @@ packages.each do |p|
   end
 end
 
-describe service('ganeti') do
-  it { should be_enabled }
+services.each do |s|
+  describe service(s) do
+    it { should be_enabled }
+  end
 end
 
 describe service('drbd') do
@@ -51,7 +66,7 @@ end
 describe file('/etc/cron.d/ganeti') do
   it { should be_mode 644 }
   its(:content) do
-    should match(%r{45 1 \* \* \* root \[ -x /usr/sbin/ganeti-cleaner \] && \
+    should match(%r{45 1 \* \* \* #{cleaner_user} \[ -x /usr/sbin/ganeti-cleaner \] && \
 /usr/sbin/ganeti-cleaner master})
   end
 end
