@@ -45,6 +45,20 @@ describe file('/var/lib/ganeti/rapi/users') do
   it { should_not be_file }
 end
 
+describe file('/root/.ssh') do
+  it { should be_directory }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+  it { should be_mode 700 }
+end
+
+describe file('/var/lib/ganeti/rapi') do
+  it { should be_directory }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+  it { should be_mode 750 }
+end
+
 describe file('/etc/cron.d/ganeti') do
   it { should exist }
 end

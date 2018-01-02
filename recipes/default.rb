@@ -42,14 +42,20 @@ package node['ganeti']['package_name'] do
 end
 
 # Ensure these directories exist
-%w(/root/.ssh /var/lib/ganeti/rapi).each do |d|
-  directory d do
-    owner 'root'
-    group 'root'
-    mode 0750
-    recursive true
-    action :create
-  end
+directory '/root/.ssh' do
+  owner 'root'
+  group 'root'
+  mode 0700
+  recursive true
+  action :create
+end
+
+directory '/var/lib/ganeti/rapi' do
+  owner 'root'
+  group 'root'
+  mode 0750
+  recursive true
+  action :create
 end
 
 # --enabled-disk-templates was added in Ganeti 2.9.0 so let's add logic to deal with that not being available to older
