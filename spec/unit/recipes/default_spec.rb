@@ -20,16 +20,23 @@ describe 'ganeti::default' do
       it do
         expect(chef_run).to include_recipe('lvm')
       end
-      %w(/root/.ssh /var/lib/ganeti/rapi).each do |d|
-        it do
-          expect(chef_run).to create_directory(d)
-            .with(
-              owner: 'root',
-              group: 'root',
-              mode: 0750,
-              recursive: true
-            )
-        end
+      it do
+        expect(chef_run).to create_directory('/root/.ssh')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: 0700,
+            recursive: true
+          )
+      end
+      it do
+        expect(chef_run).to create_directory('/var/lib/ganeti/rapi')
+          .with(
+            owner: 'root',
+            group: 'root',
+            mode: 0750,
+            recursive: true
+          )
       end
       it do
         expect(chef_run).to_not run_execute('ganeti-initialize')
