@@ -5,7 +5,7 @@ Vagrant.configure('2') do |config|
   config.vm.box = ENV['GANETI_OS'] || 'bento/centos-7.3'
   [
     %w(master 11),
-    %w(slave 12)
+    %w(slave 12),
   ].each do |name, ip_suff|
     config.vm.define name do |node|
       node.vm.network :private_network, ip: "192.168.125.#{ip_suff}"
