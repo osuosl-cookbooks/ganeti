@@ -45,7 +45,7 @@ describe 'ganeti::_drbd' do
             end
           end
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to install_package('drbd8-utils')
         end

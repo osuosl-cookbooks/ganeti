@@ -74,7 +74,7 @@ describe 'ganeti::instance_image' do
               gpgkey: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
             )
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to include_recipe('apt')
         end

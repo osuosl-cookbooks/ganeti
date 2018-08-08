@@ -13,11 +13,6 @@ CENTOS_7 = {
   version: '7.2.1511',
 }.freeze
 
-UBUNTU_12_04 = {
-  platform: 'ubuntu',
-  version: '12.04',
-}.freeze
-
 UBUNTU_14_04 = {
   platform: 'ubuntu',
   version: '14.04',
@@ -26,7 +21,6 @@ UBUNTU_14_04 = {
 ALL_PLATFORMS = [
   CENTOS_6,
   CENTOS_7,
-  UBUNTU_12_04,
   UBUNTU_14_04,
 ].freeze
 

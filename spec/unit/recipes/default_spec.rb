@@ -178,7 +178,7 @@ describe 'ganeti::default' do
               gpgkey: nil
             )
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to include_recipe('apt')
         end

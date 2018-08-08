@@ -6,7 +6,6 @@ This cookbook is designed to install Ganeti.
 
 * CentOS 6
 * CentOS 7
-* Ubuntu 12.04
 * Ubuntu 14.04
 
 ## Attributes
