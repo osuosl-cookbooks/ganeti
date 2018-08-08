@@ -80,7 +80,7 @@ describe 'ganeti::default' do
       context 'master' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
+            node.normal['ganeti']['master-node'] = true
           end.converge(described_recipe)
         end
         it do
@@ -95,8 +95,8 @@ describe 'ganeti::default' do
       context 'master on < ganeti-2.9.0' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
-            node.set['ganeti']['version'] = '2.6.0'
+            node.normal['ganeti']['master-node'] = true
+            node.normal['ganeti']['version'] = '2.6.0'
           end.converge(described_recipe)
         end
         it do
@@ -111,8 +111,8 @@ describe 'ganeti::default' do
       context 'master on >= ganeti-2.9.0' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
-            node.set['ganeti']['version'] = '2.15.0'
+            node.normal['ganeti']['master-node'] = true
+            node.normal['ganeti']['version'] = '2.15.0'
           end.converge(described_recipe)
         end
         it do

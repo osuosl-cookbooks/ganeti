@@ -7,7 +7,7 @@ describe 'ganeti::instance_image' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(p) do |node|
           lsb_codename = node['lsb']['codename']
-          node.set['ganeti']['instance_image']['config_defaults'] = { arch: 'x86_64' }
+          node.normal['ganeti']['instance_image']['config_defaults'] = { arch: 'x86_64' }
         end.converge(described_recipe)
       end
       include_context 'common_stubs'
