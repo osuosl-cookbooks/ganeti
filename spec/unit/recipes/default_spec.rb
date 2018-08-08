@@ -189,7 +189,8 @@ describe 'ganeti::default' do
               distribution: lsb_codename,
               components: %w(main),
               keyserver: 'keyserver.ubuntu.com',
-              key: '38520275'
+              # key property of apt_repostiry is stored as array after 13.4.9
+              key: Gem::Version.new(Chef::VERSION) >= Gem::Version.new('13.4.10') ? %w(38520275) : '38520275'
             )
         end
         it do

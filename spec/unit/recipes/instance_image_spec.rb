@@ -79,13 +79,14 @@ describe 'ganeti::instance_image' do
           expect(chef_run).to include_recipe('apt')
         end
         it do
+          key = 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/repo.gpg'
           expect(chef_run).to add_apt_repository('ganeti-instance-image')
             .with(
               uri: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/',
               distribution: lsb_codename,
               arch: 'amd64',
               components: %w(main),
-              key: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/repo.gpg'
+              key: Gem::Version.new(Chef::VERSION) >= Gem::Version.new('13.4.10') ? [key] : key
             )
         end
       end
