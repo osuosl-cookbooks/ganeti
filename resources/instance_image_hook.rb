@@ -1,7 +1,6 @@
 resource_name :instance_image_hook
 default_action :create
 
-property :name, String, name_property: true
 property :enable, [true, false], default: true
 property :source, String
 
