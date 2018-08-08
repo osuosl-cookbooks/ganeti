@@ -34,7 +34,7 @@ describe 'ganeti-test::instance_image_variant' do
               nomount: '',
               overlay: '',
               swap: '',
-              swap_size: ''
+              swap_size: '',
             }
           )
       end
@@ -61,13 +61,13 @@ describe 'ganeti-test::instance_image_variant' do
               nomount: 'yes',
               overlay: '/bar/foo',
               swap: 'no',
-              swap_size: '1024'
+              swap_size: '1024',
             }
           )
       end
       [
         /^FILESYSTEM="ext4"$/,
-        /^IMAGE_NAME="centos-7.3"$/
+        /^IMAGE_NAME="centos-7.3"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/ganeti/instance-image/variants/centos-7.conf').with_content(line)
@@ -88,7 +88,7 @@ describe 'ganeti-test::instance_image_variant' do
         /^KERNEL_ARGS="console=ttyS0"$/,
         /^NOMOUNT="yes"$/,
         /^SWAP="no"$/,
-        /^SWAP_SIZE="1024"$/
+        /^SWAP_SIZE="1024"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/ganeti/instance-image/variants/centos-6.conf').with_content(line)

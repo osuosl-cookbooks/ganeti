@@ -33,8 +33,8 @@ describe 'ganeti::instance_image' do
             source: 'defaults.sh.erb',
             variables: {
               params: {
-                'arch' => 'x86_64'
-              }
+                'arch' => 'x86_64',
+              },
             }
           )
       end
@@ -43,19 +43,19 @@ describe 'ganeti::instance_image' do
           .with(
             source: 'variants.list.erb',
             variables: {
-              variants: %w(default)
+              variants: %w(default),
             }
           )
       end
       [
-        /^ARCH="x86_64"$/
+        /^ARCH="x86_64"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/default/ganeti-instance-image').with_content(line)
         end
       end
       [
-        /^default$/
+        /^default$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/ganeti/instance-image/variants.list').with_content(line)

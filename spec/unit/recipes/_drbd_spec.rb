@@ -27,7 +27,7 @@ describe 'ganeti::_drbd' do
               force_reload: true,
               options: [
                 'minor_count=128',
-                'usermode_helper=/bin/true'
+                'usermode_helper=/bin/true',
               ]
             )
         end

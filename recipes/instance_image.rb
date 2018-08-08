@@ -42,7 +42,7 @@ package 'ganeti-instance-image'
   ::File.join(instance_image['config_dir'], 'hooks'),
   ::File.join(instance_image['config_dir'], 'variants'),
   ::File.join(instance_image['config_dir'], 'networks', 'instances'),
-  ::File.join(instance_image['config_dir'], 'networks', 'subnets')
+  ::File.join(instance_image['config_dir'], 'networks', 'subnets'),
 ].each do |d|
   directory d do
     recursive true

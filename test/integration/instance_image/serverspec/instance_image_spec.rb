@@ -21,7 +21,7 @@ end
 describe file('/etc/ganeti/instance-image/variants/centos-7.conf') do
   [
     /^FILESYSTEM="ext4"$/,
-    /^IMAGE_NAME="centos-7.3"$/
+    /^IMAGE_NAME="centos-7.3"$/,
   ].each do |line|
     its(:content) { should match(line) }
   end
@@ -43,7 +43,7 @@ describe file('/etc/ganeti/instance-image/variants/centos-6.conf') do
     /^KERNEL_ARGS="console=ttyS0"$/,
     /^NOMOUNT="yes"$/,
     /^SWAP="no"$/,
-    /^SWAP_SIZE="1024"$/
+    /^SWAP_SIZE="1024"$/,
   ].each do |line|
     its(:content) { should match(line) }
   end
