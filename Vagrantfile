@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure('2') do |config|
-  config.vm.box = ENV['GANETI_OS'] || 'bento/centos-7.3'
+  config.vm.box = ENV['GANETI_OS'] || 'bento/centos-7.5'
   [
     %w(master 11),
     %w(slave 12),
@@ -12,7 +12,7 @@ Vagrant.configure('2') do |config|
       node.vm.network :private_network, ip: "192.168.200.#{ip_suff}"
       node.vm.hostname = "#{name}.localdomain"
       node.vm.provision 'chef_solo' do |chef|
-        chef.version = '12.18.31'
+        chef.version = '13.8.5'
         chef.cookbooks_path = 'cookbooks'
         chef.data_bags_path = 'test/integration/data_bags'
         chef.encrypted_data_bag_secret_key_path = 'test/integration/encrypted_data_bag_secret'
