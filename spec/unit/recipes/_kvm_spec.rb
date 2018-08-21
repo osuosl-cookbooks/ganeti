@@ -19,7 +19,7 @@ describe 'ganeti::_kvm' do
         it do
           expect(chef_run).to load_kernel_module('kvm')
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to install_package('qemu-kvm')
         end

@@ -21,18 +21,18 @@ node.default['ganeti']['instance_image']['config_defaults'] = {
   'image_type' => 'qcow2',
   'image_verify' => 'no',
   'nomount' => 'yes',
-  'swap' => 'no'
+  'swap' => 'no',
 }
 node.default['ganeti']['cluster'].tap do |c|
   c['master-netdev'] = netdev
   c['nic'] = {
     'mode' => 'routed',
-    'link' => '100'
+    'link' => '100',
   }
   c['extra-opts'] = [
     "--vg-name=#{vg_name}",
     '-s 192.168.200.11',
-    "-H kvm:kernel_path='',initrd_path=''"
+    "-H kvm:kernel_path='',initrd_path=''",
   ].join(' ')
   c['name'] = 'ganeti.localdomain'
 end

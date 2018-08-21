@@ -21,7 +21,7 @@ describe 'ganeti-test::instance_image_instance' do
       end
       [
         /^ADDRESS="127.0.0.1"$/,
-        /^SUBNET="vlan100"$/
+        /^SUBNET="vlan100"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file(::File.join(instances_path, 'foo.example.org')).with_content(line)

@@ -7,7 +7,7 @@ describe 'ganeti::instance_image' do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(p) do |node|
           lsb_codename = node['lsb']['codename']
-          node.set['ganeti']['instance_image']['config_defaults'] = { arch: 'x86_64' }
+          node.normal['ganeti']['instance_image']['config_defaults'] = { arch: 'x86_64' }
         end.converge(described_recipe)
       end
       include_context 'common_stubs'
@@ -33,8 +33,8 @@ describe 'ganeti::instance_image' do
             source: 'defaults.sh.erb',
             variables: {
               params: {
-                'arch' => 'x86_64'
-              }
+                'arch' => 'x86_64',
+              },
             }
           )
       end
@@ -43,19 +43,19 @@ describe 'ganeti::instance_image' do
           .with(
             source: 'variants.list.erb',
             variables: {
-              variants: %w(default)
+              variants: %w(default),
             }
           )
       end
       [
-        /^ARCH="x86_64"$/
+        /^ARCH="x86_64"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/default/ganeti-instance-image').with_content(line)
         end
       end
       [
-        /^default$/
+        /^default$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file('/etc/ganeti/instance-image/variants.list').with_content(line)
@@ -74,18 +74,19 @@ describe 'ganeti::instance_image' do
               gpgkey: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
             )
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to include_recipe('apt')
         end
         it do
+          key = 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/repo.gpg'
           expect(chef_run).to add_apt_repository('ganeti-instance-image')
             .with(
               uri: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/',
               distribution: lsb_codename,
               arch: 'amd64',
               components: %w(main),
-              key: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/apt/repo.gpg'
+              key: Gem::Version.new(Chef::VERSION) >= Gem::Version.new('13.4.10') ? [key] : key
             )
         end
       end

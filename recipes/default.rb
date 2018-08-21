@@ -112,9 +112,7 @@ cookbook_file '/etc/lvm/lvm.conf' do
 end
 
 begin
-  rapi = Chef::EncryptedDataBagItem.load(
-    'ganeti', node['ganeti']['data_bag']['rapi_users']
-  )
+  rapi = data_bag_item('ganeti', node['ganeti']['data_bag']['rapi_users'])
 
   file '/var/lib/ganeti/rapi/users' do
     owner 'root'

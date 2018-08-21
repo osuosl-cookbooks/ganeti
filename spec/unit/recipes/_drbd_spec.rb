@@ -27,7 +27,7 @@ describe 'ganeti::_drbd' do
               force_reload: true,
               options: [
                 'minor_count=128',
-                'usermode_helper=/bin/true'
+                'usermode_helper=/bin/true',
               ]
             )
         end
@@ -45,7 +45,7 @@ describe 'ganeti::_drbd' do
             end
           end
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to install_package('drbd8-utils')
         end

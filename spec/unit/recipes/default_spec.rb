@@ -80,7 +80,7 @@ describe 'ganeti::default' do
       context 'master' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
+            node.normal['ganeti']['master-node'] = true
           end.converge(described_recipe)
         end
         it do
@@ -95,8 +95,8 @@ describe 'ganeti::default' do
       context 'master on < ganeti-2.9.0' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
-            node.set['ganeti']['version'] = '2.6.0'
+            node.normal['ganeti']['master-node'] = true
+            node.normal['ganeti']['version'] = '2.6.0'
           end.converge(described_recipe)
         end
         it do
@@ -111,8 +111,8 @@ describe 'ganeti::default' do
       context 'master on >= ganeti-2.9.0' do
         cached(:chef_run) do
           ChefSpec::SoloRunner.new(p) do |node|
-            node.set['ganeti']['master-node'] = true
-            node.set['ganeti']['version'] = '2.15.0'
+            node.normal['ganeti']['master-node'] = true
+            node.normal['ganeti']['version'] = '2.15.0'
           end.converge(described_recipe)
         end
         it do
@@ -178,7 +178,7 @@ describe 'ganeti::default' do
               gpgkey: nil
             )
         end
-      when UBUNTU_12_04, UBUNTU_14_04
+      when UBUNTU_14_04
         it do
           expect(chef_run).to include_recipe('apt')
         end
@@ -189,7 +189,8 @@ describe 'ganeti::default' do
               distribution: lsb_codename,
               components: %w(main),
               keyserver: 'keyserver.ubuntu.com',
-              key: '38520275'
+              # key property of apt_repostiry is stored as array after 13.4.9
+              key: Gem::Version.new(Chef::VERSION) >= Gem::Version.new('13.4.10') ? %w(38520275) : '38520275'
             )
         end
         it do

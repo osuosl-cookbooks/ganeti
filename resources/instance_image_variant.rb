@@ -1,7 +1,6 @@
 resource_name :instance_image_variant
 default_action :create
 
-property :name, String, name_property: true
 property :arch, String, default: ''
 property :boot_size, String, default: ''
 property :cache_dir, String, default: ''
