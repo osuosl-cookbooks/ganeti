@@ -7,7 +7,7 @@ license          'Apache-2.0'
 chef_version     '>= 12.18' if respond_to?(:chef_version)
 description      'Installs/Configures ganeti'
 long_description 'Installs/Configures ganeti'
-version          '1.5.1'
+version          '2.0.0'
 supports         'ubuntu', '~> 14.04'
 supports         'centos', '~> 6.0'
 supports         'centos', '~> 7.0'
