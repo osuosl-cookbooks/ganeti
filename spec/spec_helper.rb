@@ -5,12 +5,12 @@ ChefSpec::Coverage.start! { add_filter 'ganeti' }
 
 CENTOS_6 = {
   platform: 'centos',
-  version: '6.8',
+  version: '6.9',
 }.freeze
 
 CENTOS_7 = {
   platform: 'centos',
-  version: '7.2.1511',
+  version: '7.4.1708',
 }.freeze
 
 UBUNTU_14_04 = {
