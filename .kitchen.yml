@@ -38,7 +38,6 @@ suites:
     run_list:
       - recipe[ganeti]
     data_bags_path: ''
-    verifier: inspec
   - name: master
     run_list:
       - recipe[ganeti-test]
