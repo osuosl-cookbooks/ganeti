@@ -36,7 +36,7 @@ when 'redhat', 'centos'
       ganeti-wconfd
     )
   end
-when 'debian', 'ubuntu'
+when 'debian'
   packages = %w(
     drbd8-utils
     ganeti2
