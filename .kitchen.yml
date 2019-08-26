@@ -44,6 +44,7 @@ suites:
       ganeti:
         master-node: true
         drbd: true
+    verifier: inspec
   - name: drbd
     run_list:
       - recipe[ganeti-test]

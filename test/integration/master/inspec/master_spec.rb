@@ -1,7 +1,4 @@
-require 'serverspec'
 require 'open3'
-
-set :backend, :exec
 
 case os[:family].downcase
 when 'redhat', 'centos'
@@ -63,12 +60,15 @@ describe service('drbd') do
   it { should_not be_enabled }
 end
 
-describe file('/etc/cron.d/ganeti') do
-  it { should be_mode 644 }
-  its(:content) do
-    should match(%r{45 1 \* \* \* #{cleaner_user} \[ -x /usr/sbin/ganeti-cleaner \] && \
-/usr/sbin/ganeti-cleaner master})
-  end
+describe crontab(path: '/etc/cron.d/ganeti').where {
+  command =~ %r{\[ -x /usr/sbin/ganeti-cleaner \] && /usr/sbin/ganeti-cleaner master}
+} do
+  its('user') { should include cleaner_user }
+  its('minutes') { should cmp '45' }
+  its('hours') { should cmp '1' }
+  its('days') { should cmp '*' }
+  its('weekdays') { should cmp '*' }
+  its('months') { should cmp '*' }
 end
 
 # Currently the drbd module is not included with the kernel installed on the
@@ -83,30 +83,33 @@ when 'redhat', 'centos'
 
   # make sure drbd is loaded with the correct module parameters.
   describe file('/sys/module/drbd/parameters/usermode_helper') do
-    its(:content) { should match(%r{/bin/true}) }
+    its('content') { should match(%r{/bin/true}) }
   end
 
   describe file('/sys/module/drbd/parameters/minor_count') do
-    its(:content) { should match(/128/) }
+    its('content') { should match(/128/) }
   end
 end
 
 # Make sure lvm.conf excludes drbd
 describe file('/etc/lvm/lvm.conf') do
-  its(:content) do
+  its('content') do
     should match(%r{filter = \[ "a/.\*/", "r\|/dev/drbd.\*\|" \]})
   end
 end
 
 # Test rapi users
 describe file('/var/lib/ganeti/rapi/users') do
-  it { should be_mode 640 }
-  it { should contain('testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write') }
-  it { should contain('testuser2 {HA1}35806ebfe30a5c127194161a88d2b796') }
+  its('mode') { should cmp '0640' }
+  its('content') { should include 'testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write' }
+  its('content') { should include 'testuser2 {HA1}35806ebfe30a5c127194161a88d2b796' }
 end
 
+# testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write
+# testuser2 {HA1}35806ebfe30a5c127194161a88d2b796
+
 # Test ganeti processes
-ganeti_version = `ganeti-noded --version | awk '{print $3}'`
+ganeti_version = inspec.command("ganeti-noded --version | awk '{print $3}'").stdout.chomp
 ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0')
                     %w(noded masterd rapi luxid confd)
                   # mond is excluded on CentOS 7 for whatever reason
@@ -117,7 +120,9 @@ ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0
                   end
 
 ganeti_services.each do |d|
-  describe process("ganeti-#{d}") do
+  describe service("ganeti-#{d}") do
+    it { should be_installed }
+    it { should be_enabled }
     it { should be_running }
   end
 end
@@ -131,5 +136,5 @@ end
 
 # Verify ganeti
 describe command('/usr/sbin/gnt-cluster verify') do
-  its(:exit_status) { should eq 0 }
+  its('exit_status') { should eq 0 }
 end

@@ -1,6 +1,6 @@
 case os[:family].downcase
 when 'redhat', 'centos'
-    packages = %w( ganeti lvm2 )
+  packages = %w( ganeti lvm2 )
 when 'debian'
   packages = %w( ganeti2 lvm2 )
 end
