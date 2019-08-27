@@ -2,6 +2,8 @@
 driver:
   name: vagrant
 
+verifier: inspec
+
 provisioner:
   name: chef_solo
   data_bags_path: test/integration/data_bags
@@ -35,7 +37,6 @@ suites:
     run_list:
       - recipe[ganeti]
     data_bags_path: ''
-    verifier: inspec
   - name: master
     run_list:
       - recipe[ganeti-test]
@@ -44,7 +45,6 @@ suites:
       ganeti:
         master-node: true
         drbd: true
-    verifier: inspec
   - name: drbd
     run_list:
       - recipe[ganeti-test]
@@ -53,14 +53,12 @@ suites:
       ganeti:
         master-node: true
         drbd: true
-    verifier: inspec
   - name: kvm
     run_list:
       - recipe[ganeti]
     attributes:
       ganeti:
         hypervisor: kvm
-    verifier: inspec
   - name: instance_image
     run_list:
       - recipe[ganeti::instance_image]
@@ -68,4 +66,3 @@ suites:
       - recipe[ganeti-test::instance_image_instance]
       - recipe[ganeti-test::instance_image_subnet]
       - recipe[ganeti-test::instance_image_hook]
-    verifier: inspec
