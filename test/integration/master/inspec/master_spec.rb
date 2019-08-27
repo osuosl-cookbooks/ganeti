@@ -105,9 +105,6 @@ describe file('/var/lib/ganeti/rapi/users') do
   its('content') { should include 'testuser2 {HA1}35806ebfe30a5c127194161a88d2b796' }
 end
 
-# testuser1 {HA1}b2a16f011884b8d59df9e7be4e2f3ae8 write
-# testuser2 {HA1}35806ebfe30a5c127194161a88d2b796
-
 # Test ganeti processes
 ganeti_version = inspec.command("ganeti-noded --version | awk '{print $3}'").stdout.chomp
 ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0')
@@ -119,11 +116,19 @@ ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0
                     %w(noded wconfd rapi luxid mond)
                   end
 
-ganeti_services.each do |d|
-  describe service("ganeti-#{d}") do
-    it { should be_installed }
-    it { should be_enabled }
-    it { should be_running }
+if os[:family].downcase == ('redhat' || 'centos') && os[:release].to_i < 7
+  describe command('service --status-all') do
+    ganeti_services.each do |d|
+      its('stdout') { should match "ganeti-#{d}" }
+    end
+  end
+else
+  ganeti_services.each do |d|
+    describe service("ganeti-#{d}") do
+      it { should be_installed }
+      it { should be_enabled }
+      it { should be_running }
+    end
   end
 end
 
