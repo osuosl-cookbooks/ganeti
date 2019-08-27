@@ -178,24 +178,6 @@ describe 'ganeti::default' do
               gpgkey: nil
             )
         end
-      when UBUNTU_14_04
-        it do
-          expect(chef_run).to include_recipe('apt')
-        end
-        it do
-          expect(chef_run).to add_apt_repository('ganeti')
-            .with(
-              uri: 'ppa:pkg-ganeti-devel/lts',
-              distribution: lsb_codename,
-              components: %w(main),
-              keyserver: 'keyserver.ubuntu.com',
-              # key property of apt_repostiry is stored as array after 13.4.9
-              key: Gem::Version.new(Chef::VERSION) >= Gem::Version.new('13.4.10') ? %w(38520275) : '38520275'
-            )
-        end
-        it do
-          expect(chef_run).to install_package('ganeti2').with(version: nil)
-        end
       end
     end
   end

@@ -13,15 +13,9 @@ CENTOS_7 = {
   version: '7.4.1708',
 }.freeze
 
-UBUNTU_14_04 = {
-  platform: 'ubuntu',
-  version: '14.04',
-}.freeze
-
 ALL_PLATFORMS = [
   CENTOS_6,
   CENTOS_7,
-  UBUNTU_14_04,
 ].freeze
 
 shared_context 'common_stubs' do
