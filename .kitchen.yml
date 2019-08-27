@@ -60,6 +60,7 @@ suites:
     attributes:
       ganeti:
         hypervisor: kvm
+    verifier: inspec
   - name: instance_image
     run_list:
       - recipe[ganeti::instance_image]
