@@ -68,3 +68,4 @@ suites:
       - recipe[ganeti-test::instance_image_instance]
       - recipe[ganeti-test::instance_image_subnet]
       - recipe[ganeti-test::instance_image_hook]
+    verifier: inspec
