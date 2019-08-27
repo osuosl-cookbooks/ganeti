@@ -53,6 +53,7 @@ suites:
       ganeti:
         master-node: true
         drbd: true
+    verifier: inspec
   - name: kvm
     run_list:
       - recipe[ganeti]

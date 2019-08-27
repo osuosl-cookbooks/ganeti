@@ -1,7 +1,3 @@
-require 'serverspec'
-
-set :backend, :exec
-
 case os[:family].downcase
 when 'redhat', 'centos'
   case os[:release].to_i
@@ -42,10 +38,10 @@ when 'redhat', 'centos'
 
   # make sure drbd is loaded with the correct module parameters.
   describe file('/sys/module/drbd/parameters/usermode_helper') do
-    its(:content) { should match(%r{/bin/true}) }
+    its('content') { should match(%r{/bin/true}) }
   end
 
   describe file('/sys/module/drbd/parameters/minor_count') do
-    its(:content) { should match(/128/) }
+    its('content') { should match(/128/) }
   end
 end
