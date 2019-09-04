@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 include_recipe 'yum-epel' if platform_family?('rhel')
-include_recipe 'apt' if platform?('ubuntu')
 
 yum_repository 'ganeti' do
   node['ganeti']['yum'].each do |key, value|
@@ -30,7 +29,6 @@ apt_repository 'ganeti' do
   node['ganeti']['apt'].each do |key, value|
     send(key.to_sym, value)
   end
-  only_if { platform?('ubuntu') }
 end
 
 include_recipe 'lvm'

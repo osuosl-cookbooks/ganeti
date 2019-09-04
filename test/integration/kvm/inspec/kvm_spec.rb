@@ -1,7 +1,3 @@
-require 'serverspec'
-
-set :backend, :exec
-
 case os[:family].downcase
 when 'redhat', 'centos'
   packages = %w(
