@@ -2,7 +2,8 @@
 driver:
   name: vagrant
 
-verifier: inspec
+verifier:
+   name: inspec
 
 provisioner:
   name: chef_solo
