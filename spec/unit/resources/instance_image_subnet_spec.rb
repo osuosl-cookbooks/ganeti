@@ -14,7 +14,7 @@ describe 'ganeti-test::instance_image_subnet' do
       end
       it do
         expect(chef_run).to create_template(::File.join(subnets_path, 'vlan100'))
-          .with(netmask: '255.255.255.0', gateway: '10.0.0.1')
+          .with(variables: { netmask: '255.255.255.0', gateway: '10.0.0.1' })
       end
       it do
         expect(chef_run).to delete_file(::File.join(subnets_path, 'vlan101'))
