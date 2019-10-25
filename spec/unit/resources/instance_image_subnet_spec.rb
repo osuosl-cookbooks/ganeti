@@ -20,8 +20,8 @@ describe 'ganeti-test::instance_image_subnet' do
         expect(chef_run).to delete_file(::File.join(subnets_path, 'vlan101'))
       end
       [
-        /^NETMASK="255.255.255.0"$/,
-        /^GATEWAY="10.0.0.1"$/,
+        /^NETMASK="255\.255\.255\.0"$/,
+        /^GATEWAY="10\.0\.0\.1"$/,
       ].each do |line|
         it do
           expect(chef_run).to render_file(::File.join(subnets_path, 'vlan100')).with_content(line)
