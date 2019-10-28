@@ -29,7 +29,7 @@ end
 
 # TODO: Fix upstream to support Ubuntu/Debian platforms
 if node['platform_family'] == 'rhel' # ~FC023
-  kernel_module 'drbd' do
+  kernel_module 'drbd' do # ~FC009
     reload true
     force_reload true
     options [

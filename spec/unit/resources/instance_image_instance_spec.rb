@@ -14,7 +14,7 @@ describe 'ganeti-test::instance_image_instance' do
       end
       it do
         expect(chef_run).to create_template(::File.join(instances_path, 'foo.example.org'))
-          .with(address: '127.0.0.1', subnet: 'vlan100')
+          .with(variables: { address: '127.0.0.1', subnet: 'vlan100' })
       end
       it do
         expect(chef_run).to delete_file(::File.join(instances_path, 'bar.example.org'))
