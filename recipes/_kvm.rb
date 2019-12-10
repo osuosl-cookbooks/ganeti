@@ -15,9 +15,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-include_recipe 'kernel-modules'
-
 node['ganeti']['packages']['kvm'].each { |p| package p }
 
 # TODO: Fix upstream to support Ubuntu/Debian platforms
-kernel_module 'kvm' if node['platform_family'] == 'rhel' # ~FC023
+kernel_module 'kvm' do
+  only_if { node['platform_family'] == 'rhel' }
+  action :load
+end

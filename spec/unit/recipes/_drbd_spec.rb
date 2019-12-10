@@ -10,9 +10,6 @@ describe 'ganeti::_drbd' do
         expect { chef_run }.to_not raise_error
       end
       it do
-        expect(chef_run).to include_recipe('kernel-modules')
-      end
-      it do
         expect(chef_run).to disable_service('drbd')
       end
       case p
@@ -21,15 +18,19 @@ describe 'ganeti::_drbd' do
           expect(chef_run).to include_recipe('yum-elrepo')
         end
         it do
-          expect(chef_run).to load_kernel_module('drbd')
+          expect(chef_run).to create_file('/etc/modprobe.d/options_drbd.conf')
             .with(
-              reload: true,
-              force_reload: true,
-              options: [
-                'minor_count=128',
-                'usermode_helper=/bin/true',
-              ]
+              content: 'options drbd minor_count=128 usermode_helper=/bin/true'
             )
+        end
+        it do
+          expect(chef_run).to delete_file('/etc/modprobe.d/drbd.conf')
+        end
+        it do
+          expect(chef_run).to install_kernel_module('drbd')
+        end
+        it do
+          expect(chef_run).to load_kernel_module('drbd')
         end
         case p
         when CENTOS_6

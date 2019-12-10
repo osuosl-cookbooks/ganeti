@@ -12,7 +12,6 @@ supports         'centos', '~> 6.0'
 supports         'centos', '~> 7.0'
 
 depends          'apt'
-depends          'kernel-modules'
 depends          'lvm'
 depends          'yum'
 depends          'yum-elrepo'
