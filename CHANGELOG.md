@@ -1,3 +1,7 @@
+2.2.0 (2019-12-10)
+------------------
+- Migrate away from kernel-modules cookbook
+
 2.1.0 (2019-09-12)
 ------------------
 - Inspec tests
