@@ -4,7 +4,7 @@ maintainer_email 'chef@osuosl.org'
 source_url       'https://github.com/osuosl-cookbooks/ganeti'
 issues_url       'https://github.com/osuosl-cookbooks/ganeti/issues'
 license          'Apache-2.0'
-chef_version     '>= 12.18' if respond_to?(:chef_version)
+chef_version     '>= 14.0'
 description      'Installs/Configures ganeti'
 long_description 'Installs/Configures ganeti'
 version          '2.2.0'
