@@ -64,9 +64,6 @@ describe 'ganeti::instance_image' do
       case p
       when CENTOS_6
         it do
-          expect(chef_run).to include_recipe('yum')
-        end
-        it do
           expect(chef_run).to add_yum_repository('ganeti-instance-image')
             .with(
               description: 'Ganeti Instance Image - $basearch',
