@@ -1,3 +1,7 @@
+2.3.0 (2020-01-14)
+------------------
+- Chef 14 post-migration fixes
+
 2.2.0 (2019-12-10)
 ------------------
 - Migrate away from kernel-modules cookbook
