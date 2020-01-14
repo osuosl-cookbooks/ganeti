@@ -15,8 +15,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-include_recipe 'yum' if platform_family?('rhel')
-include_recipe 'apt' if platform_family?('debian')
 include_recipe 'ganeti'
 
 instance_image = node['ganeti']['instance_image']
