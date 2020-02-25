@@ -1,3 +1,7 @@
+2.3.1 (2020-02-25)
+------------------
+- Enable and start mond service
+
 2.3.0 (2020-01-14)
 ------------------
 - Chef 14 post-migration fixes
