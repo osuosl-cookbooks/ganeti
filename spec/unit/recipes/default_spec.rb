@@ -66,6 +66,7 @@ describe 'ganeti::default' do
           ganeti-kvmd
           ganeti-luxid
           ganeti-noded
+          ganeti-mond
           ganeti-rapi
           ganeti-wconfd
         ).each do |ganeti_service|
