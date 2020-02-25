@@ -4,6 +4,7 @@ default['ganeti']['services'] = %w(
   ganeti-confd
   ganeti-kvmd
   ganeti-luxid
+  ganeti-mond
   ganeti-noded
   ganeti-rapi
   ganeti-wconfd

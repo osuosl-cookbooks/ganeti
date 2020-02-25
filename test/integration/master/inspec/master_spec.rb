@@ -28,6 +28,7 @@ when 'redhat', 'centos'
       ganeti-confd
       ganeti-kvmd
       ganeti-luxid
+      ganeti-mond
       ganeti-noded
       ganeti-rapi
       ganeti-wconfd
@@ -109,9 +110,6 @@ end
 ganeti_version = inspec.command("ganeti-noded --version | awk '{print $3}'").stdout.chomp
 ganeti_services = if Gem::Version.new(ganeti_version) < Gem::Version.new('2.12.0')
                     %w(noded masterd rapi luxid confd)
-                  # mond is excluded on CentOS 7 for whatever reason
-                  elsif os[:release].to_i == 7 && os[:family] == 'redhat'
-                    %w(noded wconfd rapi luxid)
                   else
                     %w(noded wconfd rapi luxid mond)
                   end
