@@ -25,6 +25,9 @@ provisioner:
     yum:
       epel:
         baseurl: http://epel.osuosl.org/$releasever/$basearch
+  enforce_idempotency: true
+  multiple_converge: 2
+  deprecations_as_errors: true
 
 transport:
   name: ssh
