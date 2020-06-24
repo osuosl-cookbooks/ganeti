@@ -19,12 +19,12 @@ describe 'ganeti-test::instance_image_hook' do
       end
       %w(create grub source).each do |h|
         it do
-          expect(chef_run).to touch_file(::File.join(hooks_dir, h)).with(mode: 0755)
+          expect(chef_run).to touch_file(::File.join(hooks_dir, h)).with(mode: '755')
         end
       end
       %w(foo disable).each do |h|
         it do
-          expect(chef_run).to touch_file(::File.join(hooks_dir, h)).with(mode: 0644)
+          expect(chef_run).to touch_file(::File.join(hooks_dir, h)).with(mode: '644')
         end
       end
       it do

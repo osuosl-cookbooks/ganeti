@@ -2,7 +2,7 @@
 # Cookbook:: ganeti
 # Recipe:: _drbd
 #
-# Copyright:: 2017, Oregon State University
+# Copyright:: 2017-2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ service 'drbd' do
 end
 
 # TODO: Fix upstream to support Ubuntu/Debian platforms
-if node['platform_family'] == 'rhel' # ~FC023
+if platform_family?('rhel')
 
   # TODO: Remove after the next release of chef-14 after 14.14.29 which should include this [1]
   # [1] https://github.com/chef/chef/pull/9120

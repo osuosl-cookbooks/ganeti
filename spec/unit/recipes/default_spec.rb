@@ -25,7 +25,7 @@ describe 'ganeti::default' do
           .with(
             owner: 'root',
             group: 'root',
-            mode: 0700,
+            mode: '700',
             recursive: true
           )
       end
@@ -34,7 +34,7 @@ describe 'ganeti::default' do
           .with(
             owner: 'root',
             group: 'root',
-            mode: 0750,
+            mode: '750',
             recursive: true
           )
       end

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: ganeti
+# Cookbook:: ganeti
 # Recipe:: default
 #
-# Copyright (C) 2015 Oregon State University
+# Copyright:: 2015-2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ end
 directory '/root/.ssh' do
   owner 'root'
   group 'root'
-  mode 0700
+  mode '700'
   recursive true
   action :create
 end
@@ -51,7 +51,7 @@ end
 directory '/var/lib/ganeti/rapi' do
   owner 'root'
   group 'root'
-  mode 0750
+  mode '750'
   recursive true
   action :create
 end
@@ -115,7 +115,7 @@ begin
   file '/var/lib/ganeti/rapi/users' do
     owner 'root'
     group 'root'
-    mode 0640
+    mode '640'
     content rapi_users(rapi.to_hash)
   end
 rescue
