@@ -7,7 +7,7 @@ license          'Apache-2.0'
 chef_version     '>= 14.0'
 description      'Installs/Configures ganeti'
 version          '2.3.1'
-supports         'centos', '~> 6.0'
+
 supports         'centos', '~> 7.0'
 
 depends          'lvm'

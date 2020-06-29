@@ -19,16 +19,20 @@
 include_recipe 'yum-epel' if platform_family?('rhel')
 
 yum_repository 'ganeti' do
-  node['ganeti']['yum'].each do |key, value|
-    send(key.to_sym, value)
-  end
+  description  node['ganeti']['yum']['description']
+  url node['ganeti']['yum']['url']
+  gpgkey node['ganeti']['yum']['gpgkey']
+  gpgcheck node['ganeti']['yum']['gpgcheck']
   only_if { platform_family?('rhel') }
 end
 
 apt_repository 'ganeti' do
-  node['ganeti']['apt'].each do |key, value|
-    send(key.to_sym, value)
-  end
+  uri node['ganeti']['apt']['uri']
+  distribution node['ganeti']['apt']['distribution']
+  components node['ganeti']['apt']['components']
+  keyserver node['ganeti']['apt']['keyserver']
+  key node['ganeti']['apt']['key']
+  only_if { platform_family?('debian') }
 end
 
 include_recipe 'lvm'
@@ -89,7 +93,7 @@ execute 'ganeti-initialize' do
 end
 
 service 'ganeti' do
-  service_name lazy { ::File.exist?('/etc/init.d/ganeti') ? 'ganeti' : 'ganeti.target' }
+  service_name 'ganeti.target'
   supports status: true, restart: true
   action [:enable, :start]
 end
@@ -97,8 +101,7 @@ end
 node['ganeti']['services'].each do |ganeti_service|
   service ganeti_service do
     supports status: true, restart: true
-    action [:enable, :start]
-    not_if { ::File.exist?('/etc/init.d/ganeti') }
+    action :enable
   end
 end
 

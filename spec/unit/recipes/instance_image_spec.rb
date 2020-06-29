@@ -61,17 +61,6 @@ describe 'ganeti::instance_image' do
           expect(chef_run).to render_file('/etc/ganeti/instance-image/variants.list').with_content(line)
         end
       end
-      case p
-      when CENTOS_6
-        it do
-          expect(chef_run).to add_yum_repository('ganeti-instance-image')
-            .with(
-              description: 'Ganeti Instance Image - $basearch',
-              url: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/$basearch/$releasever',
-              gpgkey: 'http://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
-            )
-        end
-      end
     end
   end
 end

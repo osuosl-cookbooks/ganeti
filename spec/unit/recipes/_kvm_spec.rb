@@ -10,7 +10,7 @@ describe 'ganeti::_kvm' do
         expect { chef_run }.to_not raise_error
       end
       case p
-      when CENTOS_6, CENTOS_7
+      when CENTOS_7
         %w(qemu-kvm qemu-kvm-tools).each do |pkg|
           it do
             expect(chef_run).to install_package(pkg)

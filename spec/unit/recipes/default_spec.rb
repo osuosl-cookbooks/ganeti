@@ -11,7 +11,7 @@ describe 'ganeti::default' do
       end
       before do
         allow(File).to receive(:exist?).and_call_original
-        allow(File).to receive(:exist?).with('/etc/init.d/ganeti').and_return(true)
+        allow(File).to receive(:exist?).with('/usr/lib/systemd/system/ganeti.target').and_return(true)
       end
       include_context 'common_stubs'
       it 'converges successfully' do
@@ -74,7 +74,7 @@ describe 'ganeti::default' do
             expect(chef_run).to enable_service(ganeti_service).with(supports: { status: true, restart: true })
           end
           it do
-            expect(chef_run).to start_service(ganeti_service).with(supports: { status: true, restart: true })
+            expect(chef_run).to_not start_service(ganeti_service).with(supports: { status: true, restart: true })
           end
         end
       end
@@ -127,13 +127,13 @@ describe 'ganeti::default' do
       end
       it do
         expect(chef_run).to enable_service('ganeti').with(
-          service_name: 'ganeti',
+          service_name: 'ganeti.target',
           supports: { status: true, restart: true }
         )
       end
       it do
         expect(chef_run).to start_service('ganeti').with(
-          service_name: 'ganeti',
+          service_name: 'ganeti.target',
           supports: { status: true, restart: true }
         )
       end
@@ -146,7 +146,7 @@ describe 'ganeti::default' do
         ganeti-wconfd
       ).each do |ganeti_service|
         it do
-          expect(chef_run).to_not enable_service(ganeti_service).with(supports: { status: true, restart: true })
+          expect(chef_run).to enable_service(ganeti_service).with(supports: { status: true, restart: true })
         end
         it do
           expect(chef_run).to_not start_service(ganeti_service).with(supports: { status: true, restart: true })
@@ -162,7 +162,7 @@ describe 'ganeti::default' do
           )
       end
       case p
-      when CENTOS_6, CENTOS_7
+      when CENTOS_7
         it do
           expect(chef_run).to include_recipe('yum-epel')
         end
