@@ -11,7 +11,6 @@ describe 'ganeti::default' do
       end
       before do
         allow(File).to receive(:exist?).and_call_original
-        allow(File).to receive(:exist?).with('/usr/lib/systemd/system/ganeti.target').and_return(true)
       end
       include_context 'common_stubs'
       it 'converges successfully' do
@@ -40,43 +39,6 @@ describe 'ganeti::default' do
       end
       it do
         expect(chef_run).to_not run_execute('ganeti-initialize')
-      end
-      context 'systemd' do
-        cached(:chef_run) do
-          ChefSpec::SoloRunner.new(p).converge(described_recipe)
-        end
-        before do
-          allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:exist?).with('/etc/init.d/ganeti').and_return(false)
-        end
-        it do
-          expect(chef_run).to enable_service('ganeti').with(
-            service_name: 'ganeti.target',
-            supports: { status: true, restart: true }
-          )
-        end
-        it do
-          expect(chef_run).to start_service('ganeti').with(
-            service_name: 'ganeti.target',
-            supports: { status: true, restart: true }
-          )
-        end
-        %w(
-          ganeti-confd
-          ganeti-kvmd
-          ganeti-luxid
-          ganeti-noded
-          ganeti-mond
-          ganeti-rapi
-          ganeti-wconfd
-        ).each do |ganeti_service|
-          it do
-            expect(chef_run).to enable_service(ganeti_service).with(supports: { status: true, restart: true })
-          end
-          it do
-            expect(chef_run).to_not start_service(ganeti_service).with(supports: { status: true, restart: true })
-          end
-        end
       end
       context 'master' do
         cached(:chef_run) do
