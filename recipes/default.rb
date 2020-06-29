@@ -20,7 +20,7 @@ include_recipe 'yum-epel' if platform_family?('rhel')
 
 yum_repository 'ganeti' do
   description  node['ganeti']['yum']['description']
-  url node['ganeti']['yum']['url']
+  baseurl node['ganeti']['yum']['url']
   gpgkey node['ganeti']['yum']['gpgkey']
   gpgcheck node['ganeti']['yum']['gpgcheck']
   only_if { platform_family?('rhel') }

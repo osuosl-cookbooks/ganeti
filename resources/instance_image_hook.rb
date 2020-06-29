@@ -9,14 +9,12 @@ config_dir = node['ganeti']['instance_image']['config_dir']
 action :enable do
   file ::File.join(config_dir, 'hooks', new_resource.name) do
     mode '755'
-    action :touch
   end
 end
 
 action :disable do
   file ::File.join(config_dir, 'hooks', new_resource.name) do
     mode '644'
-    action :touch
   end
 end
 

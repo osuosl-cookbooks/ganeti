@@ -25,10 +25,8 @@ provisioner:
     yum:
       epel:
         baseurl: http://epel.osuosl.org/$releasever/$basearch
-
-  #TODO currently ganeti-mond won't start on the second converge, complaining about 'hmac.key' not being found
-  #enforce_idempotency: true
-  #multiple_converge: 2
+  enforce_idempotency: true
+  multiple_converge: 2
   deprecations_as_errors: true
 
 transport:
