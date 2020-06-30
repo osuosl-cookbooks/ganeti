@@ -33,8 +33,7 @@ transport:
   name: ssh
 
 platforms:
-  - name: centos-6.10
-  - name: centos-7.5
+  - name: centos-7
 
 suites:
   - name: default
