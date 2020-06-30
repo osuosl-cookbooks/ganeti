@@ -19,19 +19,16 @@
 include_recipe 'yum-epel' if platform_family?('rhel')
 
 yum_repository 'ganeti' do
-  description  node['ganeti']['yum']['description']
-  baseurl node['ganeti']['yum']['url']
-  gpgkey node['ganeti']['yum']['gpgkey']
-  gpgcheck node['ganeti']['yum']['gpgcheck']
+  node['ganeti']['yum'].each do |key, value|
+    send(key.to_sym, value)
+  end
   only_if { platform_family?('rhel') }
 end
 
 apt_repository 'ganeti' do
-  uri node['ganeti']['apt']['uri']
-  distribution node['ganeti']['apt']['distribution']
-  components node['ganeti']['apt']['components']
-  keyserver node['ganeti']['apt']['keyserver']
-  key node['ganeti']['apt']['key']
+  node['ganeti']['apt'].each do |key, value|
+    send(key.to_sym, value)
+  end
   only_if { platform_family?('debian') }
 end
 
