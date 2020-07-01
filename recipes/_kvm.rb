@@ -2,7 +2,7 @@
 # Cookbook:: ganeti
 # Recipe:: _kvm
 #
-# Copyright:: 2017, Oregon State University
+# Copyright:: 2017-2020, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,6 @@ node['ganeti']['packages']['kvm'].each { |p| package p }
 
 # TODO: Fix upstream to support Ubuntu/Debian platforms
 kernel_module 'kvm' do
-  only_if { node['platform_family'] == 'rhel' }
+  only_if { platform_family?('rhel') }
   action :load
 end

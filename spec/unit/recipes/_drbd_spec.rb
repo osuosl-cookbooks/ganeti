@@ -13,7 +13,7 @@ describe 'ganeti::_drbd' do
         expect(chef_run).to disable_service('drbd')
       end
       case p
-      when CENTOS_6, CENTOS_7
+      when CENTOS_7
         it do
           expect(chef_run).to include_recipe('yum-elrepo')
         end
@@ -32,18 +32,9 @@ describe 'ganeti::_drbd' do
         it do
           expect(chef_run).to load_kernel_module('drbd')
         end
-        case p
-        when CENTOS_6
-          %w(drbd83-utils kmod-drbd83).each do |pkg|
-            it do
-              expect(chef_run).to install_package(pkg)
-            end
-          end
-        when CENTOS_7
-          %w(drbd84-utils kmod-drbd84).each do |pkg|
-            it do
-              expect(chef_run).to install_package(pkg)
-            end
+        %w(drbd84-utils kmod-drbd84).each do |pkg|
+          it do
+            expect(chef_run).to install_package(pkg)
           end
         end
       end
