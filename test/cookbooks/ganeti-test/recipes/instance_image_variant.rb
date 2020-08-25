@@ -23,6 +23,5 @@ instance_image_variant 'centos-6' do
 end
 
 instance_image_variant 'debian' do
-  image_name ''
   action :delete
 end

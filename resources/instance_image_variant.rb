@@ -11,7 +11,7 @@ property :filesystem, String, default: ''
 property :image_cleanup, String, default: ''
 property :image_debug, String, default: ''
 property :image_dir, String, default: ''
-property :image_name, String, required: true
+property :image_name, String, required: %i(create)
 property :image_type, String, default: ''
 property :image_url, String, default: ''
 property :image_verify, String, default: ''
