@@ -1,4 +1,5 @@
 resource_name :instance_image_variant
+provides :instance_image_variant
 default_action :create
 
 property :arch, String, default: ''

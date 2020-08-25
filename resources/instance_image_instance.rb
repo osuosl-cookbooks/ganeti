@@ -1,4 +1,5 @@
 resource_name :instance_image_instance
+provides :instance_image_instance
 default_action :create
 
 property :address, String, required: true

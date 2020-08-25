@@ -1,4 +1,5 @@
 resource_name :instance_image_subnet
+provides :instance_image_subnet
 default_action :create
 
 property :netmask, String, required: true
