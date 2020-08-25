@@ -4,5 +4,7 @@ instance_image_subnet 'vlan100' do
 end
 
 instance_image_subnet 'vlan101' do
+  netmask ''
+  gateway ''
   action :delete
 end

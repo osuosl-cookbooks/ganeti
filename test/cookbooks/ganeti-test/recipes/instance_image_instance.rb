@@ -4,5 +4,7 @@ instance_image_instance 'foo.example.org' do
 end
 
 instance_image_instance 'bar.example.org' do
+  address ''
+  subnet ''
   action :delete
 end
