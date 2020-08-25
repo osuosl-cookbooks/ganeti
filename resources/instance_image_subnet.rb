@@ -1,8 +1,9 @@
 resource_name :instance_image_subnet
+provides :instance_image_subnet
 default_action :create
 
-property :netmask, String, required: true
-property :gateway, String, required: true
+property :netmask, String, required: [:create]
+property :gateway, String, required: [:create]
 
 config_dir = node['ganeti']['instance_image']['config_dir']
 

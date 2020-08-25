@@ -1,4 +1,5 @@
 resource_name :instance_image_hook
+provides :instance_image_hook
 default_action :create
 
 property :enable, [true, false], default: true
