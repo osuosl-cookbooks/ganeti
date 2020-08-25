@@ -2,8 +2,8 @@ resource_name :instance_image_instance
 provides :instance_image_instance
 default_action :create
 
-property :address, String, required: %i(create)
-property :subnet, String, required: %i(create)
+property :address, String, required: [:create]
+property :subnet, String, required: [:create]
 
 config_dir = node['ganeti']['instance_image']['config_dir']
 
