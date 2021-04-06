@@ -2,7 +2,7 @@
 # Cookbook:: ganeti
 # Recipe:: instance_image
 #
-# Copyright:: 2017-2020, Oregon State University
+# Copyright:: 2017-2021, Oregon State University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ yum_repository 'ganeti-instance-image' do
     send(key.to_sym, value)
   end
   only_if { platform_family?('rhel') }
-  action :add
+  action :create
 end
 
 apt_repository 'ganeti-instance-image' do
