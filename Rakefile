@@ -2,12 +2,12 @@
 
 require 'rake'
 
-require 'fileutils'
 require 'base64'
 require 'chef/encrypted_data_bag_item'
+require 'cookstyle'
+require 'fileutils'
 require 'json'
 require 'openssl'
-require 'cookstyle'
 require 'rubocop/rake_task'
 
 snakeoil_file_path = 'test/integration/data_bags/certificates/snakeoil.json'
@@ -120,14 +120,6 @@ desc 'Run RSpec (unit) tests'
 task :unit do
   run_command('rm -f Berksfile.lock')
   run_command('rspec')
-end
-
-desc 'Multi-node Integration with Vagrant'
-task :multi_node do
-  run_command('rm -rf cookbooks nodes Berksfile.lock')
-  run_command('berks vendor cookbooks')
-  run_command('mkdir nodes')
-  run_command('vagrant up')
 end
 
 desc 'Run all tests'
