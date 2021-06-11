@@ -1,5 +1,6 @@
 resource_name :instance_image_hook
 provides :instance_image_hook
+unified_mode true
 default_action :create
 
 property :enable, [true, false], default: true

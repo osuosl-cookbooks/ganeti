@@ -1,5 +1,6 @@
 resource_name :instance_image_variant
 provides :instance_image_variant
+unified_mode true
 default_action :create
 
 property :arch, String, default: ''

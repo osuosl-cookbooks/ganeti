@@ -1,5 +1,6 @@
 resource_name :instance_image_subnet
 provides :instance_image_subnet
+unified_mode true
 default_action :create
 
 property :netmask, String, required: [:create]
