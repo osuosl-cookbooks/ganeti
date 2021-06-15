@@ -1,17 +1,9 @@
 case os[:family].downcase
 when 'redhat', 'centos'
-  case os[:release].to_i
-  when 6
-    packages = %w(
-      drbd83-utils
-      kmod-drbd83
-    )
-  when 7
-    packages = %w(
-      drbd84-utils
-      kmod-drbd84
-    )
-  end
+  packages = %w(
+    drbd84-utils
+    kmod-drbd84
+  )
 when 'debian', 'ubuntu'
   packages = %w(
     drbd8-utils

@@ -40,6 +40,8 @@ suites:
       ganeti:
         master-node: true
         drbd: true
+    provisioner:
+      multiple_converge: 3 # to fix directory ownership contention
   - name: drbd
     run_list:
       - recipe[ganeti-test]
@@ -48,6 +50,8 @@ suites:
       ganeti:
         master-node: true
         drbd: true
+    provisioner:
+      multiple_converge: 3 # to fix directory ownership contention
   - name: kvm
     run_list:
       - recipe[ganeti]

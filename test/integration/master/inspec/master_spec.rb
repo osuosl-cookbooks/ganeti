@@ -2,38 +2,25 @@ require 'open3'
 
 case os[:family].downcase
 when 'redhat', 'centos'
-  cleaner_user = 'root'
-  case os[:release].to_i
-  when 6
-    packages = %w(
-      drbd83-utils
-      ganeti
-      kmod-drbd83
-      lvm2
-      qemu-kvm
-      qemu-kvm-tools
-    )
-    services = %w(ganeti)
-  when 7
-    packages = %w(
-      drbd84-utils
-      ganeti
-      kmod-drbd84
-      lvm2
-      qemu-kvm
-      qemu-kvm-tools
-    )
-    services = %w(
-      ganeti
-      ganeti-confd
-      ganeti-kvmd
-      ganeti-luxid
-      ganeti-mond
-      ganeti-noded
-      ganeti-rapi
-      ganeti-wconfd
-    )
-  end
+  cleaner_user = 'gnt-masterd'
+  packages = %w(
+    drbd84-utils
+    ganeti
+    kmod-drbd84
+    lvm2
+    qemu-kvm
+    qemu-kvm-tools
+  )
+  services = %w(
+    ganeti
+    ganeti-confd
+    ganeti-kvmd
+    ganeti-luxid
+    ganeti-mond
+    ganeti-noded
+    ganeti-rapi
+    ganeti-wconfd
+  )
 when 'debian'
   packages = %w(
     drbd8-utils
