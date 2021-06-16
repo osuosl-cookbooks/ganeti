@@ -36,8 +36,8 @@ end
 
 describe file('/var/lib/ganeti/rapi') do
   it { should be_directory }
-  its('owner') { should cmp 'root' }
-  its('group') { should cmp 'root' }
+  its('owner') { should cmp 'gnt-rapi' }
+  its('group') { should cmp 'gnt-masterd' }
   its('mode') { should cmp '0750' }
 end
 

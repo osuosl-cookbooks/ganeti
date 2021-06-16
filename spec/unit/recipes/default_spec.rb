@@ -30,8 +30,8 @@ describe 'ganeti::default' do
 
       it do
         expect(chef_run).to create_directory('/var/lib/ganeti/rapi').with(
-          owner: 'root',
-          group: 'root',
+          owner: 'gnt-rapi',
+          group: 'gnt-masterd',
           mode: '750',
           recursive: true
         )
@@ -48,7 +48,7 @@ describe 'ganeti::default' do
 
         it do
           expect(chef_run).to run_execute('ganeti-initialize').with(
-            command: '/usr/sbin/gnt-cluster init --enabled-disk-templates=plain,drbd --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0 ',
+            command: '/usr/sbin/gnt-cluster init --enabled-disk-templates=plain,drbd --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0  ',
             creates: '/var/lib/ganeti/config.data'
           )
         end
@@ -64,8 +64,17 @@ describe 'ganeti::default' do
 
         it do
           expect(chef_run).to run_execute('ganeti-initialize').with(
-            command: '/usr/sbin/gnt-cluster init --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0 ',
+            command: '/usr/sbin/gnt-cluster init  --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0  ',
             creates: '/var/lib/ganeti/config.data'
+          )
+        end
+
+        it do
+          expect(chef_run).to create_directory('/var/lib/ganeti/rapi').with(
+            owner: 'root',
+            group: 'root',
+            mode: '750',
+            recursive: true
           )
         end
       end
@@ -80,8 +89,17 @@ describe 'ganeti::default' do
 
         it do
           expect(chef_run).to run_execute('ganeti-initialize').with(
-            command: '/usr/sbin/gnt-cluster init --enabled-disk-templates=plain,drbd --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0 ',
+            command: '/usr/sbin/gnt-cluster init --enabled-disk-templates=plain,drbd --master-netdev=br0 --enabled-hypervisors=kvm -N mode=bridged,link=br0  ',
             creates: '/var/lib/ganeti/config.data'
+          )
+        end
+
+        it do
+          expect(chef_run).to create_directory('/var/lib/ganeti/rapi').with(
+            owner: 'root',
+            group: 'root',
+            mode: '750',
+            recursive: true
           )
         end
       end
