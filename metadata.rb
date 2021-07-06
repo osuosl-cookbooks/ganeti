@@ -6,7 +6,7 @@ issues_url       'https://github.com/osuosl-cookbooks/ganeti/issues'
 license          'Apache-2.0'
 chef_version     '>= 16.0'
 description      'Installs/Configures ganeti'
-version          '4.0.0'
+version          '5.0.0'
 
 supports         'centos', '~> 7.0'
 

@@ -1,3 +1,7 @@
+5.0.0 (2021-07-06)
+------------------
+- Set unified_mode for custom resources
+
 4.0.0 (2021-04-12)
 ------------------
 - Update Chef dependency to >= 16
