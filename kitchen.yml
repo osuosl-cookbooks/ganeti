@@ -1,12 +1,13 @@
 ---
-driver:
-  name: vagrant
 
 verifier:
    name: inspec
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  enforce_idempotency: true
+  multiple_converge: 2
+  deprecations_as_errors: true
   data_bags_path: test/integration/data_bags
   encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret
   attributes:
@@ -25,15 +26,6 @@ provisioner:
     yum:
       epel:
         baseurl: http://epel.osuosl.org/$releasever/$basearch
-  enforce_idempotency: true
-  multiple_converge: 2
-  deprecations_as_errors: true
-
-transport:
-  name: ssh
-
-platforms:
-  - name: centos-7
 
 suites:
   - name: default

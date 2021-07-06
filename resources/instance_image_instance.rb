@@ -1,5 +1,6 @@
 resource_name :instance_image_instance
 provides :instance_image_instance
+unified_mode true
 default_action :create
 
 property :address, String, required: [:create]

@@ -32,7 +32,8 @@ apt_repository 'ganeti' do
   only_if { platform_family?('debian') }
 end
 
-include_recipe 'lvm'
+package 'lvm2'
+
 include_recipe "ganeti::_#{node['ganeti']['hypervisor']}"
 include_recipe 'ganeti::_drbd' if node['ganeti']['drbd']
 
@@ -46,15 +47,18 @@ directory '/root/.ssh' do
   group 'root'
   mode '700'
   recursive true
-  action :create
 end
 
 directory '/var/lib/ganeti/rapi' do
-  owner 'root'
-  group 'root'
+  if node['ganeti']['version'] && Gem::Version.new(node['ganeti']['version']) < Gem::Version.new('3.0.0')
+    owner 'root'
+    group 'root'
+  else # ganeti v3+
+    owner 'gnt-rapi'
+    group 'gnt-masterd'
+  end
   mode '750'
   recursive true
-  action :create
 end
 
 # --enabled-disk-templates was added in Ganeti 2.9.0 so let's add logic to deal with that not being available to older
@@ -74,19 +78,11 @@ execute 'ganeti-initialize' do
   hypervisors = cluster['enabled-hypervisors'].join(',')
   nic_mode = cluster['nic']['mode']
   nic_link = cluster['nic']['link']
-  command [
-    "#{node['ganeti']['bin-path']}/gnt-cluster init",
-    enabled_disk_templates,
-    "--master-netdev=#{cluster['master-netdev']}",
-    "--enabled-hypervisors=#{hypervisors}",
-    "-N mode=#{nic_mode},link=#{nic_link}",
-    cluster['extra-opts'], cluster['name']
-  ].join(' ')
+  command "#{node['ganeti']['bin-path']}/gnt-cluster init #{enabled_disk_templates} " \
+    "--master-netdev=#{cluster['master-netdev']} --enabled-hypervisors=#{hypervisors} " \
+    "-N mode=#{nic_mode},link=#{nic_link} #{cluster['extra-opts']} #{cluster['name']}"
   creates '/var/lib/ganeti/config.data'
-  only_if do
-    node['fqdn'] == node['ganeti']['master-node'] ||
-      node['ganeti']['master-node'] == true
-  end
+  only_if { node['fqdn'] == node['ganeti']['master-node'] || node['ganeti']['master-node'] == true }
 end
 
 service 'ganeti' do

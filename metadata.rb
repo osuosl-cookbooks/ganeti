@@ -10,7 +10,5 @@ version          '4.0.0'
 
 supports         'centos', '~> 7.0'
 
-depends          'lvm'
 depends          'yum-elrepo'
 depends          'yum-epel'
-depends          'hostsfile'
