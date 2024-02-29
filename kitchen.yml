@@ -3,60 +3,27 @@
 verifier:
    name: inspec
 
+driver:
+  name: openstack
+  user_data: userdata.txt
+
 provisioner:
-  name: chef_zero
+  name: chef_infra
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
-  data_bags_path: test/integration/data_bags
-  encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret
-  attributes:
-    ganeti:
-      drbd: false
-      cluster:
-        disk-templates:
-          - "diskless"
-        master-netdev: "lo"
-        enabled-hypervisors:
-          - "fake"
-        nic:
-          mode: "routed"
-          link: "100"
-        name: "ganeti.local"
-    yum:
-      epel:
-        baseurl: http://epel.osuosl.org/$releasever/$basearch
 
 suites:
   - name: default
     run_list:
-      - recipe[ganeti]
-    data_bags_path: ''
-  - name: master
-    run_list:
       - recipe[ganeti-test]
-      - recipe[ganeti]
-    attributes:
-      ganeti:
-        master-node: true
-        drbd: true
-  - name: drbd
-    run_list:
-      - recipe[ganeti-test]
-      - recipe[ganeti]
-    attributes:
-      ganeti:
-        master-node: true
-        drbd: true
-  - name: kvm
-    run_list:
-      - recipe[ganeti]
-    attributes:
-      ganeti:
-        hypervisor: kvm
   - name: instance_image
+    verifier:
+      inspec_tests:
+        - test/integration/default
     run_list:
-      - recipe[ganeti::instance_image]
+      - recipe[ganeti-test]
+      - recipe[ganeti-test::instance_image]
       - recipe[ganeti-test::instance_image_variant]
       - recipe[ganeti-test::instance_image_instance]
       - recipe[ganeti-test::instance_image_subnet]
