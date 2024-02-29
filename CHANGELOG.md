@@ -1,3 +1,7 @@
+6.0.0 (2024-02-29)
+------------------
+- Refactor to be resource driven cookbook
+
 5.0.0 (2021-07-06)
 ------------------
 - Set unified_mode for custom resources
