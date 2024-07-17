@@ -1,3 +1,7 @@
+6.1.0 (2024-07-17)
+------------------
+- Remove support for CentOS 7
+
 6.0.0 (2024-02-29)
 ------------------
 - Refactor to be resource driven cookbook
