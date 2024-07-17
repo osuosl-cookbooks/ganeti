@@ -4,7 +4,6 @@ This cookbook is designed to install Ganeti.
 
 ## Supported Platforms
 
-* CentOS 7
 * RHEL 8
 
 ## Usage
