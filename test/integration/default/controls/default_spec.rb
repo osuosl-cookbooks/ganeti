@@ -36,21 +36,12 @@ control 'default' do
     it { should be_on }
   end
 
-  case rel
-  when 7
-    %w(qemu-kvm qemu-kvm-tools).each do |p|
-      describe package p do
-        it { should be_installed }
-      end
-    end
-  when 8
-    describe package 'qemu-kvm' do
-      it { should be_installed }
-    end
+  describe package 'qemu-kvm' do
+    it { should be_installed }
+  end
 
-    describe selinux.booleans.where(name: 'use_virtualbox') do
-      it { should be_on }
-    end
+  describe selinux.booleans.where(name: 'use_virtualbox') do
+    it { should be_on }
   end
 
   describe kernel_module 'drbd' do

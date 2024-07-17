@@ -4,12 +4,7 @@ module Ganeti
       require 'digest'
 
       def ganeti_kvm_packages
-        case node['platform_version'].to_i
-        when 7
-          %w(qemu-kvm qemu-kvm-tools)
-        when 8
-          %w(qemu-kvm)
-        end
+        %w(qemu-kvm)
       end
 
       def ganeti_drbd_packages

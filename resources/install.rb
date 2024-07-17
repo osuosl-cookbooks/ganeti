@@ -34,7 +34,7 @@ action :create do
 
   selinux_boolean 'use_virtualbox' do
     value true
-  end if node['platform_version'].to_i >= 8
+  end
 
   package 'lvm2'
   package new_resource.kvm_packages if new_resource.hypervisor == 'kvm'
