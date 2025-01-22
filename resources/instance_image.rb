@@ -7,7 +7,12 @@ property :config_defaults, Hash, default: {}
 property :yum_baseurl,
   String,
   default: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/$basearch/$releasever'
-property :yum_gpgkey, String, default: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
+property :yum_gpgkey,
+  String,
+  default: node['platform_version'].to_i >= 9 ?
+  'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl-2024' :
+  'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl'
+
 property :variants_list, Array, default: %w(default)
 
 action :install do
