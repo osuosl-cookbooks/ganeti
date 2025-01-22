@@ -9,6 +9,7 @@ description      'Installs/Configures ganeti'
 version          '6.1.0'
 
 supports         'almalinux', '~> 8.0'
+supports         'almalinux', '~> 9.0'
 
 depends          'selinux'
 depends          'yum-elrepo'
