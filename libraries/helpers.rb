@@ -24,6 +24,15 @@ module Ganeti
         )
       end
 
+      def gpgkey
+        case node['platform_version'].to_i
+        when 8
+          'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl'
+        when 9
+          'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl-2024'
+        end
+      end
+
       # rapi_users expects h to be a Hash that looks like:
       # h['username'] = {
       #   'password' => 'secret',
