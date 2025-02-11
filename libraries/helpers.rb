@@ -2,6 +2,9 @@ module Ganeti
   module Cookbook
     module Helpers
       require 'digest'
+      require 'json'
+
+      private
 
       def ganeti_kvm_packages
         %w(qemu-kvm)
@@ -12,16 +15,20 @@ module Ganeti
       end
 
       def ganeti_services
-        %w(
-          ganeti.target
-          ganeti-confd.service
-          ganeti-kvmd.service
-          ganeti-luxid.service
-          ganeti-mond.service
-          ganeti-noded.service
-          ganeti-rapi.service
-          ganeti-wconfd.service
-        )
+        default_services =
+          %w(
+            ganeti.target
+            ganeti-confd.service
+            ganeti-luxid.service
+            ganeti-mond.service
+            ganeti-noded.service
+            ganeti-rapi.service
+            ganeti-wconfd.service
+          )
+        if ganeti_kvm_enabled?
+          default_services << 'ganeti-kvmd.service'
+        end
+        default_services
       end
 
       def gpgkey
@@ -45,6 +52,29 @@ module Ganeti
           rapi_users << "#{username} {HA1}#{md5} #{opts['write'] ? 'write' : ''}".strip
         end
         rapi_users
+      end
+
+      def ganeti_config
+        begin
+          JSON.parse(File.read('/var/lib/ganeti/config.data'))
+        rescue
+          {}
+        end
+      end
+
+      def safe_dig(hash, *keys)
+        keys.reduce(hash) do |acc, key|
+          acc.is_a?(Hash) ? acc[key] : nil
+        end
+      end
+
+      def ganeti_kvm_enabled?
+        enabled_hypervisors = safe_dig(ganeti_config, 'cluster', 'enabled_hypervisors')
+        if enabled_hypervisors
+          enabled_hypervisors.include?('kvm')
+        else
+          false
+        end
       end
     end
   end

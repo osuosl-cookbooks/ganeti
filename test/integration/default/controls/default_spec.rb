@@ -78,7 +78,6 @@ control 'default' do
   %w(
     ganeti.target
     ganeti-confd.service
-    ganeti-kvmd.service
     ganeti-luxid.service
     ganeti-mond.service
     ganeti-noded.service

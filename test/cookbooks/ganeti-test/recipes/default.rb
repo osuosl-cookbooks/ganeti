@@ -45,5 +45,5 @@ ganeti_initialize 'ganeti.example.com' do
 end
 
 ganeti_service 'default' do
-  action :enable
+  action [:enable, :start]
 end
