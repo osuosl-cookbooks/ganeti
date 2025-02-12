@@ -7,7 +7,8 @@ property :config_defaults, Hash, default: {}
 property :yum_baseurl,
   String,
   default: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/$basearch/$releasever'
-property :yum_gpgkey, String, default: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
+property :yum_gpgkey, String, default: lazy { gpgkey }
+
 property :variants_list, Array, default: %w(default)
 
 action :install do

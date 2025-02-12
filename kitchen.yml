@@ -6,6 +6,7 @@ verifier:
 driver:
   name: openstack
   user_data: userdata.txt
+  flavor_ref: m2.local.4c4m50d
 
 provisioner:
   name: chef_infra

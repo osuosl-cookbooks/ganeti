@@ -18,7 +18,11 @@ describe 'ganeti-test::instance_image' do
           baseurl: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/$basearch/$releasever',
           description: 'Ganeti Instance Image - $basearch',
           gpgcheck: true,
-          gpgkey: 'https://ftp.osuosl.org/pub/osl/ganeti-instance-image/yum/repo.gpg'
+          gpgkey: if p[:version].to_i >= 9
+                    'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl-2024'
+                  else
+                    'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl'
+                  end
         )
       end
 
