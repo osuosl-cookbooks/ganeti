@@ -4,7 +4,7 @@ unified_mode true
 default_action :create
 
 property :yum_baseurl, String, default: 'https://jfut.integ.jp/linux/ganeti/$releasever/$basearch'
-property :yum_gpgkey, String, default: 'https://raw.githubusercontent.com/jfut/ganeti-rpm/refs/heads/main/rpmbuild/integ-ganeti-release-10/SOURCES/RPM-GPG-KEY-integ-ganeti-10'
+property :yum_gpgkey, String, default: 'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
 property :hypervisor, String, default: 'kvm'
 property :kvm_packages, Array, default: lazy { ganeti_kvm_packages }
 property :drbd, [true, false], default: true
