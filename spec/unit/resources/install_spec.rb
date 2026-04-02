@@ -18,7 +18,7 @@ describe 'ganeti-test::default' do
 
       it do
         expected_gpgkey = if chef_run.node['platform_version'].to_i == 10
-                            'https://raw.githubusercontent.com/jfut/ganeti-rpm/refs/heads/main/rpmbuild/integ-ganeti-release-10/SOURCES/RPM-GPG-KEY-integ-ganeti-10'
+                            'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti-10'
                           else
                             'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
                           end

@@ -6,7 +6,7 @@ default_action :create
 property :yum_baseurl, String, default: 'https://jfut.integ.jp/linux/ganeti/$releasever/$basearch'
 property :yum_gpgkey, String, default: lazy {
                                          if node['platform_version'].to_i == 10
-                                           'https://raw.githubusercontent.com/jfut/ganeti-rpm/refs/heads/main/rpmbuild/integ-ganeti-release-10/SOURCES/RPM-GPG-KEY-integ-ganeti-10'
+                                           'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti-10'
                                          else
                                            'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
                                          end
