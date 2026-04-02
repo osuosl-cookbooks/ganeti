@@ -42,6 +42,11 @@ action :create do
     value true
   end
 
+  selinux_module 'ganeti' do
+    source 'ganeti.te'
+    cookbook 'ganeti'
+  end
+
   package 'lvm2'
   package new_resource.kvm_packages if new_resource.hypervisor == 'kvm'
 

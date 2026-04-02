@@ -1,18 +1,24 @@
 ---
+driver:
+  name: vagrant
+  user_data: userdata.txt
+  flavor_ref: m2.local.4c4m50d
 
 verifier:
    name: inspec
 
-driver:
-  name: openstack
-  user_data: userdata.txt
-  flavor_ref: m2.local.4c4m50d
-
 provisioner:
   name: chef_infra
+  product_name: cinc
+  product_version: '18'
   enforce_idempotency: true
   multiple_converge: 2
   deprecations_as_errors: true
+
+platforms:
+  - name: almalinux-8
+  - name: almalinux-9
+  - name: almalinux-10
 
 suites:
   - name: default
