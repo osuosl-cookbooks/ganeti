@@ -35,7 +35,7 @@ module Ganeti
         case node['platform_version'].to_i
         when 8
           'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl'
-        when 9
+        when 9, 10
           'https://ftp.osuosl.org/pub/osl/repos/yum/RPM-GPG-KEY-osuosl-2024'
         end
       end

@@ -17,11 +17,17 @@ describe 'ganeti-test::default' do
       it { is_expected.to include_recipe 'yum-elrepo' }
 
       it do
+        expected_gpgkey = if chef_run.node['platform_version'].to_i == 10
+                            'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti-10'
+                          else
+                            'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
+                          end
+
         is_expected.to create_yum_repository('ganeti').with(
           description: 'Integ Ganeti Packages $releasever - $basearch',
           url: 'https://jfut.integ.jp/linux/ganeti/$releasever/$basearch',
           gpgcheck: true,
-          gpgkey: 'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
+          gpgkey: expected_gpgkey
         )
       end
 
@@ -29,6 +35,7 @@ describe 'ganeti-test::default' do
       it { is_expected.to set_selinux_boolean('nis_enabled').with(value: 'on') }
       it { is_expected.to set_selinux_boolean('domain_can_mmap_files').with(value: 'on') }
       it { is_expected.to set_selinux_boolean('use_virtualbox').with(value: 'on') }
+      it { is_expected.to create_selinux_module('ganeti').with(source: 'ganeti.te', cookbook: 'ganeti') }
       it { is_expected.to install_package 'qemu-kvm' }
       it { is_expected.to install_package 'lvm2' }
       it { is_expected.to install_package %w(drbd84-utils kmod-drbd84) }

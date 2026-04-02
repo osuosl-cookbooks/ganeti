@@ -4,7 +4,13 @@ unified_mode true
 default_action :create
 
 property :yum_baseurl, String, default: 'https://jfut.integ.jp/linux/ganeti/$releasever/$basearch'
-property :yum_gpgkey, String, default: 'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
+property :yum_gpgkey, String, default: lazy {
+                                         if node['platform_version'].to_i == 10
+                                           'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti-10'
+                                         else
+                                           'https://jfut.integ.jp/linux/ganeti/RPM-GPG-KEY-integ-ganeti'
+                                         end
+                                       }
 property :hypervisor, String, default: 'kvm'
 property :kvm_packages, Array, default: lazy { ganeti_kvm_packages }
 property :drbd, [true, false], default: true
@@ -34,6 +40,11 @@ action :create do
 
   selinux_boolean 'use_virtualbox' do
     value true
+  end
+
+  selinux_module 'ganeti' do
+    source 'ganeti.te'
+    cookbook 'ganeti'
   end
 
   package 'lvm2'
