@@ -44,6 +44,10 @@ control 'default' do
     it { should be_on }
   end
 
+  describe command('semodule -l') do
+    its('stdout') { should match /ganeti/ }
+  end
+
   describe kernel_module 'drbd' do
     it { should be_loaded }
   end
