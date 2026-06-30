@@ -7,5 +7,5 @@ version          '0.1.0'
 
 depends          'ganeti'
 depends          'line'
-depends          'openssh'
+depends          'openssh', '< 3.0.0'
 depends          'osl-resources'
