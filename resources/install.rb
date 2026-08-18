@@ -51,7 +51,7 @@ action :create do
   package new_resource.kvm_packages if new_resource.hypervisor == 'kvm'
 
   if new_resource.drbd
-    include_recipe 'yum-elrepo'
+    yum_elrepo 'elrepo'
     package ganeti_drbd_packages
 
     service 'drbd' do
