@@ -13,8 +13,8 @@ describe 'ganeti-test::default' do
         expect { chef_run }.to_not raise_error
       end
 
-      it { is_expected.to include_recipe 'yum-epel' }
-      it { is_expected.to create_yum_elrepo 'elrepo' }
+      it { is_expected.to create_yum_epel 'ganeti' }
+      it { is_expected.to create_yum_elrepo 'ganeti' }
 
       it do
         expected_gpgkey = if chef_run.node['platform_version'].to_i == 10

@@ -18,7 +18,7 @@ property :version, String
 property :rapi_users, Hash, sensitive: true, default: {}
 
 action :create do
-  include_recipe 'yum-epel'
+  yum_epel 'ganeti'
 
   yum_repository 'ganeti' do
     baseurl new_resource.yum_baseurl
@@ -51,7 +51,7 @@ action :create do
   package new_resource.kvm_packages if new_resource.hypervisor == 'kvm'
 
   if new_resource.drbd
-    yum_elrepo 'elrepo'
+    yum_elrepo 'ganeti'
     package ganeti_drbd_packages
 
     service 'drbd' do
