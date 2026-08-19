@@ -94,3 +94,25 @@ describe 'ganeti-test::default' do
     end
   end
 end
+
+describe 'ganeti-test::unmanaged_repos' do
+  ALL_PLATFORMS.each do |p|
+    context "#{p[:platform]} #{p[:version]}" do
+      cached(:chef_run) do
+        ChefSpec::SoloRunner.new(
+          p.dup.merge(step_into: %w(ganeti_install))
+        ).converge(described_recipe)
+      end
+
+      it 'converges successfully' do
+        expect { chef_run }.to_not raise_error
+      end
+
+      it { is_expected.to_not create_yum_epel 'ganeti' }
+      it { is_expected.to_not create_yum_elrepo 'ganeti' }
+      it { is_expected.to_not create_yum_repository 'ganeti' }
+      it { is_expected.to install_package 'ganeti' }
+      it { is_expected.to install_package %w(drbd84-utils kmod-drbd84) }
+    end
+  end
+end
