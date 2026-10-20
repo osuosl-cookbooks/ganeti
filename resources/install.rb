@@ -16,15 +16,20 @@ property :kvm_packages, Array, default: lazy { ganeti_kvm_packages }
 property :drbd, [true, false], default: true
 property :version, String
 property :rapi_users, Hash, sensitive: true, default: {}
+property :manage_repo, [true, false], default: true
+property :manage_epel, [true, false], default: true
+property :manage_elrepo, [true, false], default: true
 
 action :create do
-  include_recipe 'yum-epel'
+  yum_epel 'ganeti' if new_resource.manage_epel
 
-  yum_repository 'ganeti' do
-    baseurl new_resource.yum_baseurl
-    description 'Integ Ganeti Packages $releasever - $basearch'
-    gpgcheck true
-    gpgkey new_resource.yum_gpgkey
+  if new_resource.manage_repo
+    yum_repository 'ganeti' do
+      baseurl new_resource.yum_baseurl
+      description 'Integ Ganeti Packages $releasever - $basearch'
+      gpgcheck true
+      gpgkey new_resource.yum_gpgkey
+    end
   end
 
   selinux_install 'ganeti'
@@ -51,7 +56,7 @@ action :create do
   package new_resource.kvm_packages if new_resource.hypervisor == 'kvm'
 
   if new_resource.drbd
-    include_recipe 'yum-elrepo'
+    yum_elrepo 'ganeti' if new_resource.manage_elrepo
     package ganeti_drbd_packages
 
     service 'drbd' do
