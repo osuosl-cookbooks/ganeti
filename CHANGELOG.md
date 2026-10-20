@@ -1,3 +1,7 @@
+6.4.0 (2026-10-20)
+------------------
+- Migrate EPEL and ELRepo to custom resources
+
 6.3.1 (2026-09-09)
 ------------------
 - chef 19 update
